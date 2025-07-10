@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NY9YTXKTDR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google Analytics tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NY9YTXKTDR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NY9YTXKTDR');
+  </script>
 
-  gtag('config', 'G-NY9YTXKTDR');
-</script>
-  
   <meta charset="utf-8" />
   <title>RIMAN México | #1 en Skincare Coreano y Negocio de Distribuidores</title>
-  <meta name="description" content="Descubre RIMAN, la marca #1 en skincare coreano. Productos premium, oportunidad de negocio como distribuidor y entrenamientos de liderazgo. ¡Regístrate gratis y vive la experiencia RIMAN en México!" />
-  <meta name="keywords" content="RIMAN, skincare coreano, RIMAN México, distribuidor RIMAN, plan de compensación RIMAN, k-beauty, cuidado de la piel" />
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.rimanmexico.store" />
-  <meta property="og:title" content="RIMAN México | Skincare Coreano & Oportunidad de Negocio" />
-  <meta property="og:description" content="Conoce los productos RIMAN, únete como distribuidor y accede a entrenamientos exclusivos. ¡Regístrate gratis!" />
-  <meta property="og:image" content="https://www.rimanmexico.store/img/og-riman.jpg" />
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="RIMAN México | Skincare Coreano & Negocio" />
-  <meta property="twitter:description" content="Descubre la marca coreana #1 en skincare y la oportunidad de negocio RIMAN en México." />
-  <meta property="twitter:image" content="https://www.rimanmexico.store/img/og-riman.jpg" />
-  <!-- Canonical -->
-  <link rel="canonical" href="https://www.rimanmexico.store" />
-  <!-- Responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Tailwind CSS -->
+  <meta name="description" content="Descubre RIMAN, la marca #1 en skincare coreano. Productos premium, oportunidad de negocio como distribuidor y entrenamientos de liderazgo. ¡Regístrate gratis y vive la experiencia RIMAN en México!"/>
+  <meta name="keywords" content="RIMAN, skincare coreano, RIMAN México, distribuidor RIMAN, plan de compensación RIMAN, k-beauty, cuidado de la piel"/>
+
+  <!-- Social sharing -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:url"         content="https://www.rimanmexico.store"/>
+  <meta property="og:title"       content="RIMAN México | Skincare Coreano & Oportunidad de Negocio"/>
+  <meta property="og:description" content="Conoce los productos RIMAN, únete como distribuidor y accede a entrenamientos exclusivos. ¡Regístrate gratis!"/>
+  <meta property="og:image"       content="https://www.rimanmexico.store/img/og-riman.jpg"/>
+  <meta property="twitter:card"        content="summary_large_image"/>
+  <meta property="twitter:title"       content="RIMAN México | Skincare Coreano & Negocio"/>
+  <meta property="twitter:description" content="Descubre la marca coreana #1 en skincare y la oportunidad de negocio RIMAN en México."/>
+  <meta property="twitter:image"       content="https://www.rimanmexico.store/img/og-riman.jpg"/>
+
+  <!-- Canonical & responsive -->
+  <link rel="canonical" href="https://www.rimanmexico.store"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- Fuentes de Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans : ['Inter', 'system-ui', 'sans-serif'],
+          },
           colors: {
-            primary: "#A92454",
-            secondary: "#F7E8EE",
+            primary   : '#244A39', // verde profundo RIMAN
+            secondary : '#F2EFEA', // beige claro
+            accent    : '#76917F', // verde medio
+          },
+          borderRadius: {
+            'xl' : '1.25rem',
+            '2xl': '1.75rem',
           },
         },
       },
     };
   </script>
-  <!-- Structured Data -->
+
+  <!-- Datos estructurados -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,28 +82,32 @@
   }
   </script>
 </head>
-<header class="bg-primary text-white py-4">
+
+<body class="font-sans text-primary bg-white">
+<!-- HEADER -------------------------------------------------------------->
+<header class="bg-secondary text-primary py-4">
   <div class="container mx-auto px-6 flex justify-between items-center">
-    <a href="/" class="text-xl font-bold">RIMAN México</a>
-    <nav>
+    <a href="/" class="flex items-center gap-2">
+      <img src="https://www.rimanmexico.store/img/logo-riman.svg" alt="RIMAN México" class="h-8">
+    </a>
+    <nav class="font-semibold">
       <a href="/#registro" class="hover:underline">Regístrate</a>
     </nav>
   </div>
 </header>
 
-<!-- HERO – Video + Formulario (Info de Negocio) ------------------------------>
+<!-- HERO – Video + Formulario -------------------------------------------->
 <section class="bg-[url('https://www.rimanmexico.store/img/bg-serum.webp')] bg-cover bg-center py-12 md:py-20">
   <div class="container mx-auto px-6 grid md:grid-cols-12 gap-10 items-start">
 
-    <!-- VIDEO ----------------------------------------------------------->
+    <!-- VIDEO -->
     <div class="md:col-span-7">
-      <img src="https://www.rimanmexico.store/img/logo-riman.svg"
-           alt="RIMAN México" class="h-14 mb-6">
-      <h1 class="text-3xl md:text-4xl font-bold text-primary mb-4">
+      <img src="https://www.rimanmexico.store/img/logo-riman.svg" alt="RIMAN México" class="h-14 mb-6">
+      <h1 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
         ¿Listo para transformar tu piel <em>y</em> tus finanzas?
       </h1>
       <p class="italic text-lg mb-6">
-        Mira este video (1&nbsp;min) y descubre cómo <strong>RIMAN</strong> está revolucionando
+        Mira este video (1 min) y descubre cómo <strong>RIMAN</strong> está revolucionando
         el skincare coreano — y cómo tú puedes ganar compartiéndolo en México.
       </p>
 
@@ -101,30 +120,35 @@
       </div>
     </div>
 
-    <!-- FORMULARIO ------------------------------------------------------->
+    <!-- FORMULARIO -->
     <div class="md:col-span-5">
       <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe" method="POST"
-            class="bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-4">
-        <h2 class="text-center text-2xl font-bold text-primary mb-2">
+            class="bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
+
+        <h2 class="text-center text-2xl md:text-3xl font-serif font-bold text-primary mb-1">
           ¿Te interesa la oportunidad?
         </h2>
-        <p class="text-center text-sm text-gray-600 mb-4">
+        <p class="text-center text-sm text-gray-700 mb-6">
           Déjanos tus datos y recibe toda la información:<br>
           plan de comisiones, caso de éxito y guía de inicio.
         </p>
 
         <input type="text"  name="name"  placeholder="Nombre"
-               class="w-full border rounded-lg p-3" required>
+               class="w-full border border-primary/30 rounded-lg p-3
+                      focus:ring-2 focus:ring-primary/40" required>
         <input type="email" name="email" placeholder="Email"
-               class="w-full border rounded-lg p-3" required>
+               class="w-full border border-primary/30 rounded-lg p-3
+                      focus:ring-2 focus:ring-primary/40" required>
         <input type="tel"   name="phone" placeholder="WhatsApp (opcional)"
-               class="w-full border rounded-lg p-3">
+               class="w-full border border-primary/30 rounded-lg p-3
+                      focus:ring-2 focus:ring-primary/40">
 
         <!-- Campo oculto para identificar esta landing -->
         <input type="hidden" name="source" value="Landing RIMAN Hero">
 
         <button type="submit"
-                class="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:opacity-90 transition">
+                class="w-full bg-primary text-white font-semibold py-3 rounded-xl
+                       hover:bg-primary/90 transition">
           ¡Quiero más información!
         </button>
 
@@ -136,10 +160,33 @@
 
   </div>
 </section>
-<!-- FIN HERO --------------------------------------------------------------->
+<!-- FIN HERO -------------------------------------------------------------->
 
 
-  
+<!-- TODO el resto del documento permanece igual --------------------------->
+<!-- Beneficios de Producto -->
+<section class="py-16 bg-secondary" id="productos">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-primary mb-12">¿Por qué tu piel amará RIMAN?</h2>
+    <div class="grid gap-8 md:grid-cols-3">
+      <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+        <img src="https://www.rimanmexico.store/img/ingredientes.webp" alt="Ingredientes premium coreanos" loading="lazy" class="mx-auto mb-4 w-24 h-24"/>
+        <h3 class="font-semibold text-xl mb-2">Ingredientes Premium</h3>
+        <p>Fórmulas limpias con Centella Asiática Gigante y Agua de Lava de Jeju para resultados visibles.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+        <img src="https://www.rimanmexico.store/img/tecnologia.webp" alt="Tecnología de liposomas" loading="lazy" class="mx-auto mb-4 w-24 h-24"/>
+        <h3 class="font-semibold text-xl mb-2">Tecnología Patentada</h3>
+        <p>Liposomas nano-encapsulados que potencian la absorción y eficacia de los activos.</p>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+        <img src="https://www.rimanmexico.store/img/resultados.webp" alt="Resultados comprobados" loading="lazy" class="mx-auto mb-4 w-24 h-24"/>
+        <h3 class="font-semibold text-xl mb-2">Resultados Reales</h3>
+        <p>Estudios clínicos y miles de testimonios avalan una piel luminosa, firme y joven.</p>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   </section>
 
