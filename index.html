@@ -278,70 +278,71 @@
 <!-- RESULTADOS VISUALES – Carrusel --------------------------->
 
 
-<!-- CARRUSEL DE RESULTADOS REALES -->
-<section class="py-16 bg-secondary">
-  <h2 class="text-3xl md:text-4xl font-bold text-center text-primary mb-8">
-    Resultados Reales
-  </h2>
+<!-- RESULTADOS VISUALES – Carrusel --------------------------->
+<section id="resultados" class="py-16 bg-secondary">
+  <div class="container mx-auto px-6" 
+       x-data="{
+         slide: 0,
+         imgs: [
+  { src: 'https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN.png',
+    caption: '51 días con el Ritual de Limpieza' },
+  { src: 'https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_2.png',
+    caption: 'Reducción de manchas en 8 semanas' },
+  { src: 'https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_3.png',
+    caption: 'Piel más luminosa y uniforme' },
+  { src: 'https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_4.png',
+    caption: 'Mejora visible tras 30 días' }
+]
+       }"
+       x-init="setInterval(()=>slide = (slide+1)%imgs.length, 2000)">
+       
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-10">
+      Resultados Reales
+    </h2>
 
-  <div class="testi-wrapper">      <!-- ancho fijo y centrado -->
-    <div class="relative">
-      <!-- Botón prev -->
-      <button id="prevBtn"
-              class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80
-                     p-2 rounded-full shadow hover:bg-white">
-        ‹
+    <!-- marco del carrusel -->
+    <div class="relative w-full max-w-xl mx-auto">
+
+      <!-- diapositivas -->
+      <template x-for="(item,i) in imgs" :key="i">
+        <div x-show="slide === i" 
+             x-transition.opacity
+             class="relative">
+          <img :src="item.src" alt="Testimonio RIMAN"
+               class="w-full rounded-2xl shadow-xl object-cover">
+          <div class="absolute inset-x-0 top-0 bg-primary/95 text-white text-center py-3 text-sm sm:text-base font-semibold tracking-wide"
+               x-text="item.caption"></div>
+        </div>
+      </template>
+
+      <!-- flechas -->
+      <button @click="slide = (slide-1+imgs.length)%imgs.length"
+              class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M15 19l-7-7 7-7" /></svg>
       </button>
 
-      <!-- Slides -->
-      <div id="carousel" class="overflow-hidden relative">
-        <!-- slide 1 -->
-        <div class="testi-slide">
-          <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN.png" alt="">
-        </div>
-        <!-- slide 2 -->
-        <div class="testi-slide">
-          <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_2.png" alt="">
-        </div>
-        <!-- slide 3 -->
-        <div class="testi-slide">
-          <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_3.png" alt="">
-        </div>
-        <!-- slide 4 -->
-        <div class="testi-slide">
-          <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/cdda2653ab4cc74e10fcb0bbd4766ddc3e6d3369/TESTIMONIOS_RIMAN_4.png" alt="">
-        </div>
-      </div>
-
-      <!-- Botón next -->
-      <button id="nextBtn"
-              class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80
-                     p-2 rounded-full shadow hover:bg-white">
-        ›
+      <button @click="slide = (slide+1)%imgs.length"
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M9 5l7 7-7 7" /></svg>
       </button>
+    </div>
+
+    <!-- indicadores -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <template x-for="(item,i) in imgs" :key="i">
+        <div @click="slide = i"
+             :class="slide === i ? 'bg-primary' : 'bg-primary/30'"
+             class="h-2 w-2 rounded-full cursor-pointer"></div>
+      </template>
     </div>
   </div>
 </section>
-<!-- … sección “Gana Dinero Compartiendo Belleza” … -->
-
-<script>
-  /* Carrusel muy ligero en vanilla JS */
-  const slides   = [...document.querySelectorAll('.testi-slide')];
-  const carousel = document.getElementById('carousel');
-  let   index    = 0;
-
-  function show(i){
-    index = (i + slides.length) % slides.length;
-    carousel.style.transform = `translateX(-${index*100}%)`;
-  }
-  document.getElementById('prevBtn').onclick = ()=> show(index-1);
-  document.getElementById('nextBtn').onclick = ()=> show(index+1);
-
-  /* Auto-play cada 2 s */
-  setInterval(()=> show(index+1), 2000);
-</script>
-
 <!-- FIN CARRUSEL -------------------------------------------------------->
+
 
 <!-- BOTÓN CTA: QUIERO LOS PRODUCTOS -->
 <div class="md:col-span-12 flex justify-center mt-20 mb-20">   <!-- NUEVO: flex + mt-20 mb-20 -->
