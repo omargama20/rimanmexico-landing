@@ -110,7 +110,7 @@
         RIMAN México&nbsp;|<br class="hidden sm:inline">Marca #1 de<br class="sm:hidden">Skincare Coreano
       </h1>
 
-      <!-- Video -->
+            <!-- Video -->
       <h2 class="text-2xl md:text-3xl font-serif font-bold text-primary mb-4">
         ¿Listo para transformar tu piel <em>y</em> tus finanzas?
       </h2>
@@ -118,14 +118,34 @@
         Mira este video (2&nbsp;min) y descubre cómo <strong>RIMAN</strong> está revolucionando
         el skincare coreano — y cómo tú puedes ganar compartiéndolo en México.
       </p>
-      <div class="aspect-video rounded-2xl overflow-hidden shadow-lg">
-        <iframe class="w-full h-full"
-                src="https://www.youtube.com/embed/iTAC0QcyhCA?rel=0&modestbranding=1"
-                title="Presentación RIMAN México"
-                loading="lazy"
-                allowfullscreen></iframe>
+
+      <!-- ▸ VIDEO DESKTOP (≥ md) -->
+      <div class="hidden md:block">
+        <div class="aspect-video rounded-2xl overflow-hidden shadow-lg">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/iTAC0QcyhCA?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1"
+            title="Presentación RIMAN México"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
       </div>
-    </div><!-- Fin columna IZQ -->
+
+      <!-- ▸ VIDEO MOBILE (< md) -->
+      <div class="block md:hidden">
+        <!-- relación 9 : 16 para cubrir todo el ancho en vertical -->
+        <div class="aspect-[9/16] rounded-2xl overflow-hidden shadow-lg">
+          <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/iTAC0QcyhCA?autoplay=1&mute=1&playsinline=1&controls=1&rel=0&modestbranding=1"
+            title="Presentación RIMAN México"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+
 
      <!-- Columna DER — Formulario, ahora ocupa toda la altura ------------>
     <div class="md:col-span-5 h-full">
