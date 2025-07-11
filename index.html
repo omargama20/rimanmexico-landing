@@ -395,36 +395,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 <script>
-/* ==============  Carrusel de Resultados  ===================== */
+/* Carrusel sin autoplay – sólo flechas */
 document.addEventListener('DOMContentLoaded', () => {
-
-  const slides = [...document.querySelectorAll('#carouselWrap .carousel-slide')];
+  const slides = document.querySelectorAll('#carouselWrap .carousel-slide');
   const prev   = document.getElementById('prevBtn');
   const next   = document.getElementById('nextBtn');
   if (!slides.length) return;
 
-  let idx = 0, timer;
-  const DUR = 2000;                           // 2 s entre cambios
+  let pos = 0;
 
   const show = i => {
-    slides.forEach((s,n)=> s.style.opacity = (n===i ? '1' : '0'));
-    idx = i;
+    slides.forEach((s,n) => s.classList.toggle('hidden', n !== i));
+    pos = i;
   };
 
-  const forward  = () => show((idx + 1) % slides.length);
-  const backward = () => show((idx - 1 + slides.length) % slides.length);
+  prev.addEventListener('click', () =>
+    show((pos - 1 + slides.length) % slides.length));
 
-  const start = () => {
-    clearInterval(timer);
-    timer = setInterval(forward, DUR);
-  };
-
-  prev.addEventListener('click', () => { backward(); start(); });
-  next.addEventListener('click', () => { forward();  start(); });
-
-  show(0);          // primera imagen
-  start();          // autoplay
+  next.addEventListener('click', () =>
+    show((pos + 1) % slides.length));
 });
+</script>
+
 
 
 /* ==============  Vídeo “7 Pasos”  (sigue igual)  ============== */
