@@ -431,30 +431,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-  <!-- EXIT-INTENT POP-UP ================================================= -->
-<!-- Overlay oculto -->
+ <!-- EXIT-INTENT POP-UP ================================================= -->
+<!-- Overlay : primer pop-up (exit-intent) -->
 <div id="exitModal"
      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <!-- Tarjeta -->
   <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
     <h3 class="text-2xl font-serif font-bold text-primary">
       ¡Un momento! <span class="animate-pulse">🚀</span>
     </h3>
     <p class="text-lg leading-relaxed">
       Estás a punto de perder la oportunidad de
-      <strong>cuidar tu piel <b>&</b> generar ingresos</strong>
-      compartiendo RIMAN.
+      <strong>cuidar tu piel <b>&</b> generar ingresos</strong> con RIMAN.
     </p>
 
-    <!-- Botones -->
     <div class="flex flex-col gap-4">
-      <!-- ✅ CTA atractivo -->
-      <a href="#registro"
-         class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      <!-- CTA → muestra el recordatorio y baja al formulario -->
+      <button id="ctaToForm"
+              class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
         ¡Quiero cuidar mi piel y ganar!
-      </a>
+      </button>
 
-      <!-- ❌ Salir -->
+      <!-- Cerrar normal -->
       <button id="exitClose"
               class="text-sm text-gray-500 underline decoration-dotted hover:text-gray-700">
         Sí, me la pierdo 😔
@@ -463,45 +460,88 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<script>
-/* ---------- Lógica exit-intent ---------- */
-(function () {
-  const modal   = document.getElementById('exitModal');
-  const closeBtn= document.getElementById('exitClose');
-  const KEY     = 'riman-exit-shown';
+<!-- Overlay : segundo pop-up (recordatorio de registro) -->
+<div id="formReminderModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      ¡Solo un paso más! ✍️
+    </h3>
+    <p class="text-lg leading-relaxed">
+      Llena el formulario y nuestro equipo te dará<br>
+      todo el soporte para <strong>empezar a cuidar tu piel<br>y ganar al mismo tiempo</strong>.
+    </p>
 
-  // Mostrar solo una vez por sesión
-  const showModal = () => {
+    <button id="reminderClose"
+            class="bg-primary text-white font-semibold py-3 w-full rounded-xl hover:bg-primary/90 transition">
+      Entendido
+    </button>
+  </div>
+</div>
+
+<script>
+/* ---------- Lógica exit-intent  y recordatorio ---------- */
+(function () {
+  const exitModal      = document.getElementById('exitModal');
+  const reminderModal  = document.getElementById('formReminderModal');
+  const ctaBtn         = document.getElementById('ctaToForm');
+  const exitClose      = document.getElementById('exitClose');
+  const reminderClose  = document.getElementById('reminderClose');
+  const KEY            = 'riman-exit-shown';
+
+  /* Mostrar solo una vez por sesión */
+  const showExitModal = () => {
     if (sessionStorage.getItem(KEY)) return;
     sessionStorage.setItem(KEY, '1');
-    modal.classList.remove('hidden');
+    exitModal.classList.remove('hidden');
   };
 
-  /* 1️⃣ Desktop: cursor sale por arriba */
+  /* -------- Disparadores -------- */
+  /* Desktop – cursor sale por arriba */
   document.addEventListener('mouseleave', e => {
-    if (e.clientY <= 0) showModal();
+    if (e.clientY <= 0) showExitModal();
   });
 
-  /* 2️⃣ Mobile: scroll > 60 %  ✚  back button → history manipulation */
+  /* Móvil – scroll > 60 % */
   let fired = false;
   window.addEventListener('scroll', () => {
     if (fired) return;
-    const scrolled = window.scrollY / (document.body.scrollHeight - innerHeight);
-    if (scrolled > 0.6) { fired = true; showModal(); }
+    const s = scrollY / (document.body.scrollHeight - innerHeight);
+    if (s > 0.6) { fired = true; showExitModal(); }
   });
 
-  /* Back-button (sin jank): empujamos un estado */
+  /* Back-button móvil sin jank */
   if (history && history.pushState) {
     history.pushState({ exit: false }, '');
     window.addEventListener('popstate', e => {
-      if (!e.state || !e.state.exit) showModal();
+      if (!e.state || !e.state.exit) showExitModal();
     });
   }
 
-  /* Cerrar */
-  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-  modal.addEventListener('click',  e => {
-    if (e.target === modal) modal.classList.add('hidden');
+  /* -------- Acciones de botones -------- */
+  // CTA principal
+  ctaBtn.addEventListener('click', () => {
+    exitModal.classList.add('hidden');
+    // Muestra recordatorio
+    reminderModal.classList.remove('hidden');
+    // Desplaza suavemente al formulario
+    const form = document.getElementById('registro');
+    form && form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Cerrar normal
+  exitClose.addEventListener('click', () => exitModal.classList.add('hidden'));
+
+  // Cerrar recordatorio
+  const closeReminder = () => reminderModal.classList.add('hidden');
+  reminderClose.addEventListener('click', closeReminder);
+  reminderModal.addEventListener('click', e => {
+    if (e.target === reminderModal) closeReminder();
+  });
+
+  // Clic fuera del primer modal
+  exitModal.addEventListener('click', e => {
+    if (e.target === exitModal) exitModal.classList.add('hidden');
   });
 })();
 </script>
