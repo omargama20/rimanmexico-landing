@@ -207,25 +207,26 @@
   </div>
 </section>
 
-<!-- Vídeo / Historia de Marca -->
+   <!-- Vídeo / Historia de Marca -->
 <section class="py-20" id="historia">
   <div class="container mx-auto px-6 grid md:grid-cols-12 gap-10 items-center">
 
-    <!-- VIDEO -->
-    <div class="md:col-span-6">
-      <div class="aspect-video rounded-2xl overflow-hidden shadow-lg">
+    <!-- VIDEO (ahora 7/12 columnas en desktop) -->
+    <div class="md:col-span-7">                   <!-- antes: md:col-span-6 -->
+      <div class="aspect-video md:aspect-[3/2]    <!-- antes: sólo aspect-video -->
+                  rounded-2xl overflow-hidden shadow-lg">
         <video
           src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
           controls
-          playsinline  <!-- permite iOS/Android dentro de la página -->
+          playsinline
           muted
           class="w-full h-full object-cover rounded-2xl">
         </video>
       </div>
     </div>
 
-    <!-- TEXTO -->
-    <div class="md:col-span-6">
+    <!-- TEXTO (pasa a 5/12 columnas en desktop) -->
+    <div class="md:col-span-5"> 
       <h2 class="text-3xl font-bold text-brand mb-4">
         Ritual RIMAN&nbsp;| 7 Pasos
       </h2>
