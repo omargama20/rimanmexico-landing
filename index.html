@@ -229,15 +229,16 @@
     <div class="md:col-span-7">                   <!-- antes: md:col-span-6 -->
       <div class="aspect-video md:aspect-[3/2]    <!-- antes: sólo aspect-video -->
                   rounded-2xl overflow-hidden shadow-lg">
-        <video
-          src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
-          controls
-          playsinline
-          muted
-          class="w-full h-full object-cover rounded-2xl">
-        </video>
-      </div>
-    </div>
+        
+      <!-- VIDEO ─ autoplay al entrar en pantalla, muted + botón de audio -->
+<video id="ritualVideo"
+       src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
+       class="w-full h-full object-cover rounded-2xl"
+       muted
+       playsinline
+       controls        <!-- muestra el icono de audio -->
+       preload="none"  <!-- carga diferida -->
+></video>
 
     <!-- TEXTO (pasa a 5/12 columnas en desktop) -->
     <div class="md:col-span-5"> 
@@ -323,6 +324,26 @@
     </div>
   </div>
 </section>
+
+      <script>
+/* Reproduce / pausa el vídeo cuando entra o sale del viewport */
+document.addEventListener('DOMContentLoaded', () => {
+  const vid = document.getElementById('ritualVideo');
+  if (!vid) return;
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) {               // 50 % visible
+        vid.play().catch(()=>{});
+      } else {
+        vid.pause();
+      }
+    }),
+    { threshold: 0.5 }                      // mitad del área
+  );
+  io.observe(vid);
+});
+</script>
 
 </body>
 </html>
