@@ -275,60 +275,95 @@
 <!-- … Botón “¡Quiero los productos!” … -->
 
   
-<!-- ▸ RESULTADOS REALES  ──────────────────────────────────────── -->
-<section class="py-16 bg-secondary">
-  <h2 class="text-center text-3xl md:text-4xl font-bold text-brand mb-12">
-    Resultados Reales
-  </h2>
+<!-- =========================================================
+===  RESULTADOS REALES  – Carrusel manual sin autoplay  ======
+========================================================== -->
+<section class="py-16 bg-secondary" id="resultados">
+  <div class="container mx-auto px-6">
 
-  <!-- envoltorio -->
-  <div id="carouselWrap" class="relative w-full max-w-[640px] mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">
+      Resultados Reales
+    </h2>
 
-    <!-- diapositivas (mismo alto / ancho siempre) -->
-    <div class="carousel-slide opacity-100 transition-opacity duration-700">
-      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png"
-           alt="Testimonio RIMAN 1" class="w-full rounded-2xl shadow-xl">
+    <!-- wrapper centrado, con ancho fijo para que no “salte” -->
+    <div id="carouselWrap"
+         class="relative mx-auto w-full max-w-[440px] md:max-w-[520px]">
+
+      <!-- === diapositivas === -->
+      <div class="carousel-slide">  <!-- visible al inicio -->
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png"
+             alt="Testimonio RIMAN" class="w-full rounded-2xl shadow-xl">
+      </div>
+
+      <div class="carousel-slide hidden">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_2.png"
+             alt="Testimonio RIMAN 2" class="w-full rounded-2xl shadow-xl">
+      </div>
+
+      <div class="carousel-slide hidden">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png"
+             alt="Testimonio RIMAN 3" class="w-full rounded-2xl shadow-xl">
+      </div>
+
+      <div class="carousel-slide hidden">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png"
+             alt="Testimonio RIMAN 4" class="w-full rounded-2xl shadow-xl">
+      </div>
+
+      <!-- === Flechas === -->
+      <button id="prevBtn"
+              class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90
+                     border border-primary rounded-full w-10 h-10 flex
+                     items-center justify-center shadow hover:bg-primary
+                     hover:text-white transition">
+        &#10094;
+      </button>
+
+      <button id="nextBtn"
+              class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90
+                     border border-primary rounded-full w-10 h-10 flex
+                     items-center justify-center shadow hover:bg-primary
+                     hover:text-white transition">
+        &#10095;
+      </button>
     </div>
 
-    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
-      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_2.png"
-           alt="Testimonio RIMAN 2" class="w-full rounded-2xl shadow-xl">
+    <!-- botón CTA debajo del carrusel -->
+    <div class="flex justify-center mt-10">
+      <a href="https://mall.riman.com/vicencionetwork/home"
+         target="_blank" rel="noopener"
+         class="inline-block bg-primary text-white font-semibold text-lg
+                px-20 py-4 rounded-xl shadow-xl hover:bg-primary/90 transition">
+        ¡Quiero los productos!
+      </a>
     </div>
 
-    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
-      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png"
-           alt="Testimonio RIMAN 3" class="w-full rounded-2xl shadow-xl">
-    </div>
-
-    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
-      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png"
-           alt="Testimonio RIMAN 4" class="w-full rounded-2xl shadow-xl">
-    </div>
-
-    <!-- flechas -->
-    <button id="prevBtn"
-            class="absolute top-1/2 -translate-y-1/2 left-3 z-20
-                   bg-white w-10 h-10 rounded-full shadow flex justify-center items-center">
-      &#10094;
-    </button>
-
-    <button id="nextBtn"
-            class="absolute top-1/2 -translate-y-1/2 right-3 z-20
-                   bg-white w-10 h-10 rounded-full shadow flex justify-center items-center">
-      &#10095;
-    </button>
-  </div>
-
-  <!-- CTA bajo el carrusel -->
-  <div class="flex justify-center mt-10">
-    <a href="https://mall.riman.com/vicencionetwork/home" target="_blank" rel="noopener"
-       class="inline-block bg-primary text-white font-semibold text-lg
-              px-20 py-6 rounded-2xl shadow-xl hover:bg-primary/90 transition">
-      ¡Quiero los productos!
-    </a>
   </div>
 </section>
-<!-- ────────────────────────────────────────────────────────────── -->
+
+<!-- =========  JS del carrusel (sin autoplay)  =============== -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('#carouselWrap .carousel-slide');
+  const prev   = document.getElementById('prevBtn');
+  const next   = document.getElementById('nextBtn');
+  if (!slides.length) return;
+
+  let pos = 0;
+
+  const show = i => {
+    slides.forEach((s, n) => s.classList.toggle('hidden', n !== i));
+    pos = i;
+  };
+
+  prev.addEventListener('click', () =>
+    show((pos - 1 + slides.length) % slides.length));
+
+  next.addEventListener('click', () =>
+    show((pos + 1) % slides.length));
+});
+</script>
+
 
 
 <!-- Oportunidad de Negocio -->
