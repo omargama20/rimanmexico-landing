@@ -430,6 +430,83 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+
+  <!-- EXIT-INTENT POP-UP ================================================= -->
+<!-- Overlay oculto -->
+<div id="exitModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <!-- Tarjeta -->
+  <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      ¡Un momento! <span class="animate-pulse">🚀</span>
+    </h3>
+    <p class="text-lg leading-relaxed">
+      Estás a punto de perder la oportunidad de
+      <strong>cuidar tu piel <b>&</b> generar ingresos</strong>
+      compartiendo RIMAN.
+    </p>
+
+    <!-- Botones -->
+    <div class="flex flex-col gap-4">
+      <!-- ✅ CTA atractivo -->
+      <a href="#registro"
+         class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+        ¡Quiero cuidar mi piel y ganar!
+      </a>
+
+      <!-- ❌ Salir -->
+      <button id="exitClose"
+              class="text-sm text-gray-500 underline decoration-dotted hover:text-gray-700">
+        Sí, me la pierdo 😔
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Lógica exit-intent ---------- */
+(function () {
+  const modal   = document.getElementById('exitModal');
+  const closeBtn= document.getElementById('exitClose');
+  const KEY     = 'riman-exit-shown';
+
+  // Mostrar solo una vez por sesión
+  const showModal = () => {
+    if (sessionStorage.getItem(KEY)) return;
+    sessionStorage.setItem(KEY, '1');
+    modal.classList.remove('hidden');
+  };
+
+  /* 1️⃣ Desktop: cursor sale por arriba */
+  document.addEventListener('mouseleave', e => {
+    if (e.clientY <= 0) showModal();
+  });
+
+  /* 2️⃣ Mobile: scroll > 60 %  ✚  back button → history manipulation */
+  let fired = false;
+  window.addEventListener('scroll', () => {
+    if (fired) return;
+    const scrolled = window.scrollY / (document.body.scrollHeight - innerHeight);
+    if (scrolled > 0.6) { fired = true; showModal(); }
+  });
+
+  /* Back-button (sin jank): empujamos un estado */
+  if (history && history.pushState) {
+    history.pushState({ exit: false }, '');
+    window.addEventListener('popstate', e => {
+      if (!e.state || !e.state.exit) showModal();
+    });
+  }
+
+  /* Cerrar */
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click',  e => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+})();
+</script>
+<!-- ================================================================ -->
+
 </body>
 </html>
 
