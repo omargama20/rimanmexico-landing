@@ -81,6 +81,22 @@
     ]
   }
   </script>
+
+  <style>
+  /* fondo rayado sólo para el contenedor del formulario */
+  .form-lined{
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 26px,
+        #244A39 26px,
+        #244A39 28px     /* grosor de la línea */
+      );
+    background-size: 100% 28px;      /* distancia entre líneas */
+  }
+</style>
+
 </head>
 
 <body class="font-sans text-primary bg-white">
@@ -103,7 +119,7 @@
 <section class="bg-[url('https://www.rimanmexico.store/img/bg-serum.webp')] bg-cover bg-center py-12 lg:py-20">
   <div class="container mx-auto px-6 grid gap-10 lg:grid-cols-12 items-start">
 
-    <!-- Columna IZQ — Texto + Video  ---------------------------------->
+    <!-- Columna IZQ — Texto + Vídeo ----------------------------------->
     <div class="lg:col-span-6">
       <!-- Titular -->
       <h1 class="font-serif font-semibold text-brand text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
@@ -119,8 +135,8 @@
         el skincare coreano — y cómo tú puedes ganar compartiéndolo en México.
       </p>
 
-      <!-- Vídeo – vertical 9:16 y tamaño controlado -->
-      <div class="aspect-[9/16] max-w-[370px] lg:max-w-[400px] rounded-2xl overflow-hidden shadow-lg">
+      <!-- Vídeo vertical 9:16, alineado con el texto -->
+      <div class="aspect-[9/16] max-w-[370px] lg:max-w-[400px] mx-auto lg:ml-0 rounded-2xl overflow-hidden shadow-lg">
         <iframe class="w-full h-full"
                 src="https://www.youtube.com/embed/iTAC0QcyhCA?autoplay=1&mute=1&rel=0&modestbranding=1"
                 title="Presentación RIMAN México"
@@ -130,10 +146,9 @@
       </div>
     </div><!-- Fin columna IZQ -->
 
-    <!-- Columna DER — Formulario, ocupa 6/12 sólo en desktop ----------->
+    <!-- Columna DER — Formulario -------------------------------------->
     <div class="lg:col-span-6 h-full">
-      <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe"
-            method="POST"
+      <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe" method="POST"
             class="h-full flex flex-col justify-center
                    bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
 
@@ -146,11 +161,11 @@
         </p>
 
         <input type="text"  name="name"  placeholder="Nombre"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
+               class="lined-input w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
         <input type="email" name="email" placeholder="Email"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
+               class="lined-input w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
         <input type="tel"   name="phone" placeholder="WhatsApp (opcional)"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40">
+               class="lined-input w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40">
 
         <input type="hidden" name="source" value="Landing RIMAN Hero">
 
