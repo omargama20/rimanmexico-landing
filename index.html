@@ -221,34 +221,25 @@
   </div>
 </section>
 
-   <!-- Vídeo / Historia de Marca -->
+  <!-- Vídeo / Historia de Marca -->
 <section class="py-20" id="historia">
   <div class="container mx-auto px-6 grid md:grid-cols-12 gap-10 items-center">
 
-    <!-- VIDEO (ahora 7/12 columnas en desktop) -->
-    <div class="md:col-span-7">                   <!-- antes: md:col-span-6 -->
-      <div class="aspect-video md:aspect-[3/2]    <!-- antes: sólo aspect-video -->
-                  rounded-2xl overflow-hidden shadow-lg">
-        
-      <!-- VIDEO ─ autoplay al entrar en pantalla, muted + botón de audio -->
-<video id="ritualVideo"
-       src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
-       class="w-full h-full object-cover rounded-2xl"
-       muted
-       playsinline
-       controls        <!-- muestra el icono de audio -->
-       preload="none"  <!-- carga diferida -->
-></video>
+    <!-- VÍDEO (7/12 columnas) -->
+    <div class="md:col-span-7">
+      <div class="aspect-video md:aspect-[3/2] rounded-2xl overflow-hidden shadow-lg">
+        <video id="ritualVideo"
+               src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
+               class="w-full h-full object-cover"
+               muted playsinline controls preload="none"></video>
+      </div>
+    </div>
 
-    <!-- TEXTO (pasa a 5/12 columnas en desktop) -->
-    <div class="md:col-span-5"> 
-      <h2 class="text-3xl font-bold text-brand mb-4">
-        Ritual RIMAN&nbsp;| 7 Pasos
-      </h2>
+    <!-- TEXTO (5/12 columnas) -->
+    <div class="md:col-span-5 space-y-4">
+      <h2 class="text-3xl font-bold text-brand">Ritual RIMAN&nbsp;| 7 Pasos</h2>
 
-      <p class="mb-4">
-        Activa tu brillo interior con nuestra rutina de siete pasos —un viaje sensorial que transforma el cuidado facial en un momento de auténtico bienestar:
-      </p>
+      <p>Activa tu brillo interior con nuestra rutina de siete pasos —un viaje sensorial que transforma el cuidado facial en un momento de auténtico bienestar:</p>
 
       <ul class="list-disc pl-5 space-y-2">
         <li><strong>Polvo Limpiador Activo:</strong> limpia y exfolia suavemente para revelar una textura de piel ultrasuave.</li>
@@ -260,13 +251,13 @@
         <li><strong>Daily Aqua BB:</strong> cobertura ligera y radiante que unifica el tono durante todo el día.</li>
       </ul>
 
-      <p class="mt-4">
-        Sigue el ritual y siente la diferencia desde la primera aplicación. Tu piel, pero mejor: radiante, equilibrada y llena de vida.
-      </p>
+      <p>Sigue el ritual y siente la diferencia desde la primera aplicación. Tu piel, pero mejor: radiante, equilibrada y llena de vida.</p>
     </div>
 
   </div>
 </section>
+<!-- FIN VIDEO / Historia de Marca -->
+
   
     <!-- BOTÓN CTA: QUIERO LOS PRODUCTOS -->
 <div class="md:col-span-12 flex justify-center mt-20 mb-20">   <!-- NUEVO: flex + mt-20 mb-20 -->
