@@ -35,6 +35,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
+  <!-- Alpine JS para el carrusel ------------------------------->
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -270,6 +273,66 @@
   </a>
 </div>
 
+<!-- RESULTADOS VISUALES – Carrusel --------------------------->
+<section id="resultados" class="py-16 bg-secondary">
+  <div class="container mx-auto px-6" 
+       x-data="{
+         slide: 0,
+         imgs: [
+           { src: 'https://images.leadconnectorhq.com/image/f_webp/q_80/r_800/u_https://assets.cdn.filesafe.space/UcxGkvLuy8V3yqxG177R/media/682a4b7deb0f1413433e2ad1.jpeg', caption: '51 días con el Ritual de Limpieza' },
+           { src: 'https://images.leadconnectorhq.com/image/f_webp/q_80/r_800/u_https://assets.cdn.filesafe.space/UcxGkvLuy8V3yqxG177R/media/682a4b7deb0f1411e13e2ace.jpeg', caption: 'Reducción de manchas en 8 semanas' },
+           { src: 'https://images.leadconnectorhq.com/image/f_webp/q_80/r_800/u_https://assets.cdn.filesafe.space/UcxGkvLuy8V3yqxG177R/media/682a4b7deb0f14123c3e2acf.jpeg', caption: 'Piel más luminosa y uniforme' },
+           { src: 'https://images.leadconnectorhq.com/image/f_webp/q_80/r_800/u_https://assets.cdn.filesafe.space/UcxGkvLuy8V3yqxG177R/media/682a4b7deb0f1412b33e2ad0.jpeg', caption: 'Mejora visible tras 30 días' }
+         ]
+       }"
+       x-init="setInterval(()=>slide = (slide+1)%imgs.length, 2000)">
+       
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-10">
+      Resultados Reales
+    </h2>
+
+    <!-- marco del carrusel -->
+    <div class="relative w-full max-w-xl mx-auto">
+
+      <!-- diapositivas -->
+      <template x-for="(item,i) in imgs" :key="i">
+        <div x-show="slide === i" 
+             x-transition.opacity
+             class="relative">
+          <img :src="item.src" alt="Testimonio RIMAN"
+               class="w-full rounded-2xl shadow-xl object-cover">
+          <div class="absolute inset-x-0 top-0 bg-primary/95 text-white text-center py-3 text-sm sm:text-base font-semibold tracking-wide"
+               x-text="item.caption"></div>
+        </div>
+      </template>
+
+      <!-- flechas -->
+      <button @click="slide = (slide-1+imgs.length)%imgs.length"
+              class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M15 19l-7-7 7-7" /></svg>
+      </button>
+
+      <button @click="slide = (slide+1)%imgs.length"
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-2 backdrop-blur">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </div>
+
+    <!-- indicadores -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <template x-for="(item,i) in imgs" :key="i">
+        <div @click="slide = i"
+             :class="slide === i ? 'bg-primary' : 'bg-primary/30'"
+             class="h-2 w-2 rounded-full cursor-pointer"></div>
+      </template>
+    </div>
+  </div>
+</section>
+<!-- FIN CARRUSEL -------------------------------------------------------->
 
 
 <!-- Oportunidad de Negocio -->
