@@ -429,31 +429,6 @@ document.addEventListener('DOMContentLoaded', () => {
   io.observe(vid);
 });
 
-<script>
-/* Carrusel sin autoplay – sólo flechas */
-document.addEventListener('DOMContentLoaded', () => {
-  const slides = document.querySelectorAll('#carouselWrap .carousel-slide');
-  const prev   = document.getElementById('prevBtn');
-  const next   = document.getElementById('nextBtn');
-  if (!slides.length) return;
-
-  let pos = 0;
-
-  const show = i => {
-    slides.forEach((s,n) => s.classList.toggle('hidden', n !== i));
-    pos = i;
-  };
-
-  prev.addEventListener('click', () =>
-    show((pos - 1 + slides.length) % slides.length));
-
-  next.addEventListener('click', () =>
-    show((pos + 1) % slides.length));
-});
-</script>
-
-
-
 /* ==============  Vídeo “7 Pasos”  (sigue igual)  ============== */
 document.addEventListener('DOMContentLoaded',()=>{
   const v = document.getElementById('ritualVideo');
@@ -465,8 +440,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 </script>
-
-
 
 /* ---------- Video 7 Pasos ---------- */
 (function(){
