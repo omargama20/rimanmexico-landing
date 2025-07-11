@@ -429,18 +429,6 @@ document.addEventListener('DOMContentLoaded', () => {
   io.observe(vid);
 });
 
-
-</script>
-/* ---------- Video 7 Pasos ---------- */
-(function(){
-  const v = document.getElementById('ritualVideo');   /* añade id="ritualVideo" a tu <video> */
-  if(!v) return;
-  v.muted = true;          // garantiza autoplay
-  v.addEventListener('loadedmetadata', ()=>{
-    v.currentTime = 3;     // portada en segundo 3
-    v.play();
-  });
-})();
 </script>
 </body>
 </html>
