@@ -142,44 +142,42 @@
       </div>
     </div>
 
-    <!-- Columna DER — Formulario -->
-    <div class="lg:col-span-6 h-full">
-      <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe" method="POST"
-            class="form-lined                               <!-- ← líneas verdes -->
-                   h-full flex flex-col justify-center
-                   bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
+ <!-- Columna DER — Formulario -->
+<div id="registro" class="lg:col-span-6 h-full">
+  <!--  PATTERN de líneas verdes (class form-lined)  -->
+  <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe" method="POST"
+        class="form-lined
+               h-full flex flex-col justify-center
+               bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
 
-        <h3 class="text-center text-2xl md:text-3xl font-serif font-bold text-primary">
-          ¿Te interesa la oportunidad?
-        </h3>
-        <p class="text-center text-sm text-gray-700">
-          Déjanos tus datos y recibe toda la información:<br>
-          plan de comisiones, testimonios, casos de éxito, etc.
-        </p>
+    <h3 class="text-center text-2xl md:text-3xl font-serif font-bold text-primary">
+      ¿Te interesa la oportunidad?
+    </h3>
+    <p class="text-center text-sm text-gray-700">
+      Déjanos tus datos y recibe toda la información:<br>
+      plan de comisiones, testimonios, casos de éxito, etc.
+    </p>
 
-        <input type="text"  name="name"  placeholder="Nombre"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
-        <input type="email" name="email" placeholder="Email"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
-        <input type="tel"   name="phone" placeholder="WhatsApp (opcional)"
-               class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40">
+    <input type="text"  name="name"  placeholder="Nombre"
+           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
+    <input type="email" name="email" placeholder="Email"
+           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
+    <input type="tel"   name="phone" placeholder="WhatsApp (opcional)"
+           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40">
 
-        <input type="hidden" name="source" value="Landing RIMAN Hero">
+    <input type="hidden" name="source" value="Landing RIMAN Hero">
 
-        <button type="submit"
-                class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-          ¡Quiero más información!
-        </button>
+    <button type="submit"
+            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      ¡Quiero más información!
+    </button>
 
-        <p class="text-xs text-center text-gray-500">
-          Cero spam — solo material oficial de RIMAN.
-        </p>
-      </form>
-    </div>
+    <p class="text-xs text-center text-gray-500">
+      Cero spam — solo material oficial de RIMAN.
+    </p>
+  </form>
+</div>
 
-  </div>
-</section>
-<!-- … resto del documento no cambia … -->
 <!-- FIN HERO ----------------------------------------------------------->
 
 
@@ -431,82 +429,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
- <!-- EXIT-INTENT POP-UP ================================================= -->
-<!-- Overlay : primer pop-up (exit-intent) -->
-<div id="exitModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
+ <!-- ------------ EXIT-INTENT POP-UP ------------ -->
+<div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+  <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
+    <button id="exitClose" class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
     <h3 class="text-2xl font-serif font-bold text-primary">
-      ¡Un momento! <span class="animate-pulse">🚀</span>
+      🤔 ¿Te vas sin antes conocer RIMAN?
     </h3>
-    <p class="text-lg leading-relaxed">
-      Estás a punto de perder la oportunidad de
-      <strong>cuidar tu piel <b>&</b> generar ingresos</strong> con RIMAN.
+    <p class="text-gray-700">
+      ¡Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong> al mismo tiempo!
     </p>
-
-    <div class="flex flex-col gap-4">
-      <!-- CTA → muestra el recordatorio y baja al formulario -->
-      <button id="ctaToForm"
-              class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-        ¡Quiero cuidar mi piel y ganar!
-      </button>
-
-      <!-- Cerrar normal -->
-      <button id="exitClose"
-              class="text-sm text-gray-500 underline decoration-dotted hover:text-gray-700">
-        Sí, me la pierdo 😔
-      </button>
-    </div>
+    <button id="ctaToForm"
+            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      ¡Quiero cuidar mi piel y ganar!
+    </button>
+    <button id="exitClose"
+            class="mt-2 text-sm underline text-gray-500">
+      Sí, me la pierdo
+    </button>
   </div>
 </div>
 
-<!-- Overlay : segundo pop-up (recordatorio de registro) -->
-<div id="formReminderModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
+<!-- --- Recordatorio para llenar formulario --- -->
+<div id="formReminderModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+  <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
+    <button id="reminderClose" class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
     <h3 class="text-2xl font-serif font-bold text-primary">
-      ¡Solo un paso más! ✍️
+      📝 ¡Un paso más!
     </h3>
-    <p class="text-lg leading-relaxed">
-      Llena el formulario y nuestro equipo te dará<br>
-      todo el soporte para <strong>empezar a cuidar tu piel<br>y ganar al mismo tiempo</strong>.
+    <p class="text-gray-700">
+      Completa el formulario y nuestro equipo te guiará para empezar a <strong>cuidar tu piel</strong> y <strong>generar ingresos</strong>.
     </p>
-
     <button id="reminderClose"
-            class="bg-primary text-white font-semibold py-3 w-full rounded-xl hover:bg-primary/90 transition">
-      Entendido
+            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      Entendido, voy al formulario
     </button>
   </div>
 </div>
 
 <script>
-<script>
-/* ---------- Lógica exit-intent y recordatorio (máx. 5 veces) ---------- */
+/* ---------- Lógica exit-intent con máximo 5 veces ---------- */
 (function () {
   const exitModal      = document.getElementById('exitModal');
   const reminderModal  = document.getElementById('formReminderModal');
   const ctaBtn         = document.getElementById('ctaToForm');
-  const exitClose      = document.getElementById('exitClose');
+  const exitCloses     = document.querySelectorAll('#exitClose');
   const reminderClose  = document.getElementById('reminderClose');
 
-  /* ——— Control de frecuencia ——— */
-  const KEY   = 'riman-exit-count';          // contador de veces mostrado
-  const LIMIT = 5;                           // máximo por sesión
+  const KEY   = 'riman-exit-count';
+  const LIMIT = 5;
 
   const showExitModal = () => {
     const n = +(sessionStorage.getItem(KEY) || 0);
-    if (n >= LIMIT) return;                  // ya alcanzó el límite
-    sessionStorage.setItem(KEY, n + 1);      // incrementa
+    if (n >= LIMIT) return;
+    sessionStorage.setItem(KEY, n + 1);
     exitModal.classList.remove('hidden');
   };
 
-  /* -------- Disparadores -------- */
-  /* Desktop – cursor abandona la ventana por arriba */
+  /* -------- Triggers -------- */
   document.addEventListener('mouseleave', e => {
     if (e.clientY <= 0) showExitModal();
   });
 
-  /* Móvil – scroll > 60 % (dejamos 1 solo intento para mobile) */
   let fired = false;
   window.addEventListener('scroll', () => {
     if (fired) return;
@@ -514,7 +498,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (s > 0.6) { fired = true; showExitModal(); }
   });
 
-  /* Back-button móvil sin jank */
   if (history && history.pushState) {
     history.pushState({ exit: false }, '');
     window.addEventListener('popstate', e => {
@@ -522,21 +505,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* -------- Acciones de botones -------- */
-  // CTA → muestra recordatorio + scroll al formulario
+  /* -------- Botones -------- */
   ctaBtn.addEventListener('click', () => {
     exitModal.classList.add('hidden');
     reminderModal.classList.remove('hidden');
-    document.getElementById('registro')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('registro')?.scrollIntoView({ behavior: 'smooth' });
   });
 
-  // Cerrar pop-ups
-  exitClose.addEventListener('click', () => exitModal.classList.add('hidden'));
+  exitCloses.forEach(btn =>
+    btn.addEventListener('click', () => exitModal.classList.add('hidden')));
+
   reminderClose.addEventListener('click', () =>
     reminderModal.classList.add('hidden'));
 
-  // Cerrar haciendo clic fuera de cada modal
+  /* Clic fuera para cerrar */
   [exitModal, reminderModal].forEach(modal => {
     modal.addEventListener('click', e => {
       if (e.target === modal) modal.classList.add('hidden');
@@ -544,6 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 </script>
+<!-- ================================================================ -->
 
 </body>
 </html>
