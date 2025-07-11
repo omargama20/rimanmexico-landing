@@ -275,44 +275,61 @@
 <!-- … Botón “¡Quiero los productos!” … -->
 
   
-<!-- RESULTADOS VISUALES – Carrusel --------------------------->
-
-
-<!-- 🔄 Carrusel Resultados Reales -->
+<!-- ▸ RESULTADOS REALES  ──────────────────────────────────────── -->
 <section class="py-16 bg-secondary">
-  <h2 class="text-center text-3xl md:text-4xl font-bold text-brand mb-10">
+  <h2 class="text-center text-3xl md:text-4xl font-bold text-brand mb-12">
     Resultados Reales
   </h2>
 
-  <div id="carrusel-resultados"
-       class="relative mx-auto h-[520px] w-full max-w-[720px] rounded-2xl overflow-hidden shadow-xl">
+  <!-- envoltorio -->
+  <div id="carouselWrap" class="relative w-full max-w-[640px] mx-auto">
 
-    <!-- Diapositivas -->
-    <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png"
-         class="slide absolute inset-0 w-full h-full object-cover opacity-100 transition-opacity duration-700"
-         alt="Testimonio 1">
+    <!-- diapositivas (mismo alto / ancho siempre) -->
+    <div class="carousel-slide opacity-100 transition-opacity duration-700">
+      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png"
+           alt="Testimonio RIMAN 1" class="w-full rounded-2xl shadow-xl">
+    </div>
 
-    <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_2.png"
-         class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
-         alt="Testimonio 2">
+    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
+      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_2.png"
+           alt="Testimonio RIMAN 2" class="w-full rounded-2xl shadow-xl">
+    </div>
 
-    <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png"
-         class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
-         alt="Testimonio 3">
+    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
+      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png"
+           alt="Testimonio RIMAN 3" class="w-full rounded-2xl shadow-xl">
+    </div>
 
-    <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png"
-         class="slide absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
-         alt="Testimonio 4">
+    <div class="carousel-slide opacity-0 absolute inset-0 transition-opacity duration-700">
+      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png"
+           alt="Testimonio RIMAN 4" class="w-full rounded-2xl shadow-xl">
+    </div>
 
-    <!-- Flechas -->
-    <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white text-primary rounded-full h-10 w-10 flex items-center justify-center shadow">❮</button>
-    <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-primary rounded-full h-10 w-10 flex items-center justify-center shadow">❯</button>
+    <!-- flechas -->
+    <button id="prevBtn"
+            class="absolute top-1/2 -translate-y-1/2 left-3 z-20
+                   bg-white w-10 h-10 rounded-full shadow flex justify-center items-center">
+      &#10094;
+    </button>
+
+    <button id="nextBtn"
+            class="absolute top-1/2 -translate-y-1/2 right-3 z-20
+                   bg-white w-10 h-10 rounded-full shadow flex justify-center items-center">
+      &#10095;
+    </button>
+  </div>
+
+  <!-- CTA bajo el carrusel -->
+  <div class="flex justify-center mt-10">
+    <a href="https://mall.riman.com/vicencionetwork/home" target="_blank" rel="noopener"
+       class="inline-block bg-primary text-white font-semibold text-lg
+              px-20 py-6 rounded-2xl shadow-xl hover:bg-primary/90 transition">
+      ¡Quiero los productos!
+    </a>
   </div>
 </section>
+<!-- ────────────────────────────────────────────────────────────── -->
 
-  
-
-<!-- FIN CARRUSEL -------------------------------------------------------->
 
 <!-- Oportunidad de Negocio -->
 <section class="py-16 bg-primary text-white" id="negocio">
@@ -378,34 +395,50 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 <script>
-/* ---------- Carrusel ---------- */
+/* ==============  Carrusel de Resultados  ===================== */
 document.addEventListener('DOMContentLoaded', () => {
 
-  const slides = Array.from(document.querySelectorAll('#carrusel-resultados .slide'));
-  const prev   = document.getElementById('prevSlide');
-  const next   = document.getElementById('nextSlide');
-
-  if (!slides.length || !prev || !next) return;   // por si algo quedó mal copiado
+  const slides = [...document.querySelectorAll('#carouselWrap .carousel-slide')];
+  const prev   = document.getElementById('prevBtn');
+  const next   = document.getElementById('nextBtn');
+  if (!slides.length) return;
 
   let idx = 0, timer;
+  const DUR = 2000;                           // 2 s entre cambios
 
-  function show(i){
-    slides.forEach((s,n) => s.style.opacity = n === i ? '1' : '0');
+  const show = i => {
+    slides.forEach((s,n)=> s.style.opacity = (n===i ? '1' : '0'));
     idx = i;
-  }
-  function nxt(){ show((idx + 1) % slides.length); }
-  function prv(){ show((idx - 1 + slides.length) % slides.length); }
-  function reset(){
+  };
+
+  const forward  = () => show((idx + 1) % slides.length);
+  const backward = () => show((idx - 1 + slides.length) % slides.length);
+
+  const start = () => {
     clearInterval(timer);
-    timer = setInterval(nxt, 2000);               // autoplay cada 2 s
-  }
+    timer = setInterval(forward, DUR);
+  };
 
-  prev.addEventListener('click', () => { prv(); reset(); });
-  next.addEventListener('click', () => { nxt(); reset(); });
+  prev.addEventListener('click', () => { backward(); start(); });
+  next.addEventListener('click', () => { forward();  start(); });
 
-  show(0);        // primera imagen visible
-  reset();        // inicia autoplay
+  show(0);          // primera imagen
+  start();          // autoplay
 });
+
+
+/* ==============  Vídeo “7 Pasos”  (sigue igual)  ============== */
+document.addEventListener('DOMContentLoaded',()=>{
+  const v = document.getElementById('ritualVideo');
+  if(!v) return;
+  v.muted = true;
+  v.addEventListener('loadedmetadata', ()=>{
+    v.currentTime = 3;   // portada a partir del segundo 3
+    v.play();
+  });
+});
+</script>
+
 
 
 /* ---------- Video 7 Pasos ---------- */
