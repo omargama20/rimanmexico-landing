@@ -310,6 +310,7 @@
   </div>
 </section>
 
+  
 
 <!-- FIN CARRUSEL -------------------------------------------------------->
 
@@ -376,26 +377,36 @@ document.addEventListener('DOMContentLoaded', () => {
   io.observe(vid);
 });
 
-       <script>
+<script>
 /* ---------- Carrusel ---------- */
-(function(){
-  const slides = document.querySelectorAll('#carrusel-resultados .slide');
+document.addEventListener('DOMContentLoaded', () => {
+
+  const slides = Array.from(document.querySelectorAll('#carrusel-resultados .slide'));
   const prev   = document.getElementById('prevSlide');
   const next   = document.getElementById('nextSlide');
-  let   idx    = 0, timer;
+
+  if (!slides.length || !prev || !next) return;   // por si algo quedó mal copiado
+
+  let idx = 0, timer;
 
   function show(i){
-    slides.forEach((s,n)=> s.style.opacity = n===i ? '1':'0');
+    slides.forEach((s,n) => s.style.opacity = n === i ? '1' : '0');
     idx = i;
   }
-  function nxt(){ show((idx+1)%slides.length);}
-  function prv(){ show((idx-1+slides.length)%slides.length);}
-  function reset(){ clearInterval(timer); timer = setInterval(nxt,2000); }
+  function nxt(){ show((idx + 1) % slides.length); }
+  function prv(){ show((idx - 1 + slides.length) % slides.length); }
+  function reset(){
+    clearInterval(timer);
+    timer = setInterval(nxt, 2000);               // autoplay cada 2 s
+  }
 
-  prev.onclick = ()=>{ prv(); reset(); };
-  next.onclick = ()=>{ nxt(); reset(); };
-  reset();                 // inicia autoplay
-})();
+  prev.addEventListener('click', () => { prv(); reset(); });
+  next.addEventListener('click', () => { nxt(); reset(); });
+
+  show(0);        // primera imagen visible
+  reset();        // inicia autoplay
+});
+
 
 /* ---------- Video 7 Pasos ---------- */
 (function(){
