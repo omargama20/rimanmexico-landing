@@ -468,64 +468,37 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-/* ---------- Lógica exit-intent con máximo 5 veces ---------- */
-(function () {
-  const exitModal      = document.getElementById('exitModal');
-  const reminderModal  = document.getElementById('formReminderModal');
-  const ctaBtn         = document.getElementById('ctaToForm');
-  const exitCloses     = document.querySelectorAll('#exitClose');
-  const reminderClose  = document.getElementById('reminderClose');
+<script>
+// ── 1. Helper ────────────────────────────────────────────────────────────────
+const $ = s => document.querySelector(s);
 
-  const KEY   = 'riman-exit-count';
-  const LIMIT = 5;
+// ── 2. Paso-2: botón que cierra el pop-up y baja al formulario ──────────────
+$('#goFormBtn')?.addEventListener('click', e => {
+  e.preventDefault();
+  $('#popupStep2')?.classList.add('hidden');          // cierra
+  document.body.classList.remove('overflow-hidden'); // vuelve a permitir scroll
+  $('#registro')?.scrollIntoView({behavior:'smooth'});
+});
 
-  const showExitModal = () => {
-    const n = +(sessionStorage.getItem(KEY) || 0);
-    if (n >= LIMIT) return;
-    sessionStorage.setItem(KEY, n + 1);
-    exitModal.classList.remove('hidden');
+// ── 3. Exit-intent (desktop) 1-solo-por-sesión ───────────────────────────────
+//  • disparo sólo la PRIMERA vez que el cursor sale por arriba
+//  • uso sessionStorage para recordar que ya mostré el pop-up
+(function initExitIntent(){
+  if (sessionStorage.getItem('exitPopShown')) return;              // ya se mostró
+
+  const listener = ev => {
+    if (ev.clientY <= 0) {                                         // cursor ↑
+      sessionStorage.setItem('exitPopShown', 'yes');
+      $('#exitPopup')?.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      window.removeEventListener('mouseout', listener);
+    }
   };
 
-  /* -------- Triggers -------- */
-  document.addEventListener('mouseleave', e => {
-    if (e.clientY <= 0) showExitModal();
-  });
-
-  let fired = false;
-  window.addEventListener('scroll', () => {
-    if (fired) return;
-    const s = scrollY / (document.body.scrollHeight - innerHeight);
-    if (s > 0.6) { fired = true; showExitModal(); }
-  });
-
-  if (history && history.pushState) {
-    history.pushState({ exit: false }, '');
-    window.addEventListener('popstate', e => {
-      if (!e.state || !e.state.exit) showExitModal();
-    });
-  }
-
-  /* -------- Botones -------- */
-  ctaBtn.addEventListener('click', () => {
-    exitModal.classList.add('hidden');
-    reminderModal.classList.remove('hidden');
-    document.getElementById('registro')?.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  exitCloses.forEach(btn =>
-    btn.addEventListener('click', () => exitModal.classList.add('hidden')));
-
-  reminderClose.addEventListener('click', () =>
-    reminderModal.classList.add('hidden'));
-
-  /* Clic fuera para cerrar */
-  [exitModal, reminderModal].forEach(modal => {
-    modal.addEventListener('click', e => {
-      if (e.target === modal) modal.classList.add('hidden');
-    });
-  });
+  window.addEventListener('mouseout', listener);
 })();
 </script>
+
 <!-- ================================================================ -->
 
 </body>
