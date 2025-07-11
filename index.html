@@ -480,29 +480,33 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-/* ---------- Lógica exit-intent  y recordatorio ---------- */
+<script>
+/* ---------- Lógica exit-intent y recordatorio (máx. 5 veces) ---------- */
 (function () {
   const exitModal      = document.getElementById('exitModal');
   const reminderModal  = document.getElementById('formReminderModal');
   const ctaBtn         = document.getElementById('ctaToForm');
   const exitClose      = document.getElementById('exitClose');
   const reminderClose  = document.getElementById('reminderClose');
-  const KEY            = 'riman-exit-shown';
 
-  /* Mostrar solo una vez por sesión */
+  /* ——— Control de frecuencia ——— */
+  const KEY   = 'riman-exit-count';          // contador de veces mostrado
+  const LIMIT = 5;                           // máximo por sesión
+
   const showExitModal = () => {
-    if (sessionStorage.getItem(KEY)) return;
-    sessionStorage.setItem(KEY, '1');
+    const n = +(sessionStorage.getItem(KEY) || 0);
+    if (n >= LIMIT) return;                  // ya alcanzó el límite
+    sessionStorage.setItem(KEY, n + 1);      // incrementa
     exitModal.classList.remove('hidden');
   };
 
   /* -------- Disparadores -------- */
-  /* Desktop – cursor sale por arriba */
+  /* Desktop – cursor abandona la ventana por arriba */
   document.addEventListener('mouseleave', e => {
     if (e.clientY <= 0) showExitModal();
   });
 
-  /* Móvil – scroll > 60 % */
+  /* Móvil – scroll > 60 % (dejamos 1 solo intento para mobile) */
   let fired = false;
   window.addEventListener('scroll', () => {
     if (fired) return;
@@ -519,33 +523,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* -------- Acciones de botones -------- */
-  // CTA principal
+  // CTA → muestra recordatorio + scroll al formulario
   ctaBtn.addEventListener('click', () => {
     exitModal.classList.add('hidden');
-    // Muestra recordatorio
     reminderModal.classList.remove('hidden');
-    // Desplaza suavemente al formulario
-    const form = document.getElementById('registro');
-    form && form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('registro')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  // Cerrar normal
+  // Cerrar pop-ups
   exitClose.addEventListener('click', () => exitModal.classList.add('hidden'));
+  reminderClose.addEventListener('click', () =>
+    reminderModal.classList.add('hidden'));
 
-  // Cerrar recordatorio
-  const closeReminder = () => reminderModal.classList.add('hidden');
-  reminderClose.addEventListener('click', closeReminder);
-  reminderModal.addEventListener('click', e => {
-    if (e.target === reminderModal) closeReminder();
-  });
-
-  // Clic fuera del primer modal
-  exitModal.addEventListener('click', e => {
-    if (e.target === exitModal) exitModal.classList.add('hidden');
+  // Cerrar haciendo clic fuera de cada modal
+  [exitModal, reminderModal].forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) modal.classList.add('hidden');
+    });
   });
 })();
 </script>
-<!-- ================================================================ -->
 
 </body>
 </html>
