@@ -429,77 +429,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
- <!-- ------------ EXIT-INTENT POP-UP ------------ -->
-<div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-  <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
-    <button id="exitClose" class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
-    <h3 class="text-2xl font-serif font-bold text-primary">
-      🤔 ¿Te vas sin antes conocer RIMAN?
-    </h3>
-    <p class="text-gray-700">
-      ¡Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong> al mismo tiempo!
-    </p>
-    <button id="ctaToForm"
-            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-      ¡Quiero cuidar mi piel y ganar!
-    </button>
-    <button id="exitClose"
-            class="mt-2 text-sm underline text-gray-500">
-      Sí, me la pierdo
-    </button>
+  <!-- ==============  EXIT-INTENT & RECORDATORIO  ========================= -->
+
+  <!-- ① Pop-up de salida -->
+  <div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
+      <button class="exitClose absolute top-3 right-4 text-2xl leading-none">&times;</button>
+
+      <h3 class="text-2xl font-serif font-bold text-primary">
+        🤔 ¿Te vas sin antes conocer RIMAN?
+      </h3>
+      <p class="text-gray-700">
+        ¡Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong> al mismo tiempo!
+      </p>
+
+      <button id="ctaToForm"
+              class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+        ¡Quiero cuidar mi piel y ganar!
+      </button>
+
+      <button class="exitClose mt-2 text-sm underline text-gray-500">
+        Sí, me la pierdo
+      </button>
+    </div>
   </div>
-</div>
 
-<!-- --- Recordatorio para llenar formulario --- -->
-<div id="formReminderModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-  <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
-    <button id="reminderClose" class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
-    <h3 class="text-2xl font-serif font-bold text-primary">
-      📝 ¡Un paso más!
-    </h3>
-    <p class="text-gray-700">
-      Completa el formulario y nuestro equipo te guiará para empezar a <strong>cuidar tu piel</strong> y <strong>generar ingresos</strong>.
-    </p>
-    <button id="reminderClose"
-            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-      Entendido, voy al formulario
-    </button>
+  <!-- ② Recordatorio de formulario -->
+  <div id="formReminderModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
+      <button class="reminderClose absolute top-3 right-4 text-2xl leading-none">&times;</button>
+
+      <h3 class="text-2xl font-serif font-bold text-primary">
+        📝 ¡Un paso más!
+      </h3>
+      <p class="text-gray-700">
+        Completa el formulario y nuestro equipo te guiará para empezar a <strong>cuidar tu piel</strong> y <strong>generar ingresos</strong>.
+      </p>
+
+      <button class="reminderClose w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+        Entendido, voy al formulario
+      </button>
+    </div>
   </div>
-</div>
 
-<script>
-<script>
-// ── 1. Helper ────────────────────────────────────────────────────────────────
-const $ = s => document.querySelector(s);
+    <!-- ===== Pop-up lógica ===== -->
+  <script>
+  const $ = s => document.querySelector(s);
 
-// ── 2. Paso-2: botón que cierra el pop-up y baja al formulario ──────────────
-$('#goFormBtn')?.addEventListener('click', e => {
-  e.preventDefault();
-  $('#popupStep2')?.classList.add('hidden');          // cierra
-  document.body.classList.remove('overflow-hidden'); // vuelve a permitir scroll
-  $('#registro')?.scrollIntoView({behavior:'smooth'});
-});
+  document.addEventListener('DOMContentLoaded', () => {
 
-// ── 3. Exit-intent (desktop) 1-solo-por-sesión ───────────────────────────────
-//  • disparo sólo la PRIMERA vez que el cursor sale por arriba
-//  • uso sessionStorage para recordar que ya mostré el pop-up
-(function initExitIntent(){
-  if (sessionStorage.getItem('exitPopShown')) return;              // ya se mostró
+    /* ---------- Botones CERRAR ---------- */
+    document.querySelectorAll('.exitClose').forEach(btn =>
+      btn.addEventListener('click', () => {
+        $('#exitModal')?.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      })
+    );
 
-  const listener = ev => {
-    if (ev.clientY <= 0) {                                         // cursor ↑
-      sessionStorage.setItem('exitPopShown', 'yes');
-      $('#exitPopup')?.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-      window.removeEventListener('mouseout', listener);
+    document.querySelectorAll('.reminderClose').forEach(btn =>
+      btn.addEventListener('click', () => {
+        $('#formReminderModal')?.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+        // baja suave al formulario si existe la sección #registro
+        document.getElementById('registro')?.scrollIntoView({behavior:'smooth'});
+      })
+    );
+
+    /* ---------- Botón CTA en pop-up de salida ---------- */
+    $('#ctaToForm')?.addEventListener('click', () => {
+      $('#exitModal')?.classList.add('hidden');
+      $('#formReminderModal')?.classList.remove('hidden');
+    });
+
+
+    /* ---------- Exit-intent (una vez por sesión) ---------- */
+    if (!sessionStorage.getItem('exitPopShown')) {
+      const onMouseOut = e => {
+        if (e.clientY <= 0) {                        // cursor sale por arriba
+          sessionStorage.setItem('exitPopShown','1');
+          $('#exitModal')?.classList.remove('hidden');
+          document.body.classList.add('overflow-hidden');
+          window.removeEventListener('mouseout', onMouseOut);
+        }
+      };
+      window.addEventListener('mouseout', onMouseOut);
     }
-  };
 
-  window.addEventListener('mouseout', listener);
-})();
-</script>
-
-<!-- ================================================================ -->
+  });
+  </script>
+</body>
+</html>
 
 </body>
 </html>
