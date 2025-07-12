@@ -467,6 +467,27 @@ document.addEventListener('DOMContentLoaded', () => {
     Sí, me la pierdo 😔
   </button>
 
+<!-- ==== Pop-up de recordatorio: completa el formulario ==== -->
+<div id="formReminderModal"
+     class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white max-w-md w-[92%] p-8 rounded-2xl text-center space-y-6 relative">
+    <button id="reminderClose"
+            class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
+
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      🚀 ¡Estás a un paso!
+    </h3>
+
+    <p class="text-gray-700 leading-relaxed">
+      Completa este breve formulario y nuestro equipo te dará todo el soporte
+      para <strong>cuidar tu piel</strong> y <strong>empezar a ganar ingresos</strong> con RIMAN.
+    </p>
+
+    <button id="reminderCloseBtn"
+            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      Entendido, voy al formulario
+    </button>
+
 </div>
 
 <!-- 2) Pop-up recordatorio (se abre tras el CTA del anterior) -->
@@ -574,6 +595,40 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <!-- ================================================================ -->
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const exitModal    = document.getElementById('exitModal');          // pop-up 1
+  const ctaToForm    = document.getElementById('ctaToForm');          // botón verde
+  const remindModal  = document.getElementById('formReminderModal');  // pop-up 2
+  const remindClose  = document.getElementById('reminderClose');
+  const remindBtn    = document.getElementById('reminderCloseBtn');
+
+  if (!exitModal || !ctaToForm || !remindModal) return;
+
+  /* 1️⃣  Botón “¡Quiero cuidar mi piel y ganar!”  →  muestra pop-up 2 */
+  ctaToForm.addEventListener('click', e => {
+    e.preventDefault();                      // evitamos salto de ancla
+    exitModal.classList.add('hidden');       // cerramos pop-up 1
+    remindModal.classList.remove('hidden');  // abrimos pop-up 2
+  });
+
+  /* 2️⃣  Función que cierra pop-up 2 y hace scroll suave al formulario */
+  const goToForm = () => {
+    remindModal.classList.add('hidden');
+    document.getElementById('registro')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  /* 3️⃣  Cierres posibles */
+  remindClose?.addEventListener('click', goToForm);
+  remindBtn  ?.addEventListener('click', goToForm);
+  remindModal.addEventListener('click', e => {
+    if (e.target === remindModal) goToForm();   // clic fuera de la tarjeta
+  });
+});
+</script>
+
 
 </body>
 </html>
