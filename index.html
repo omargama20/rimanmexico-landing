@@ -142,11 +142,12 @@
       </div>
     </div>
 
- <!-- Columna DER — Formulario -->
-<div id="registro" class="lg:col-span-6 h-full">
-  <!--  PATTERN de líneas verdes (class form-lined)  -->
-  <form action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe" method="POST"
-        class="form-lined
+   <!-- Columna DER — Formulario -->
+<div class="lg:col-span-6 h-full">
+  <form id="registro"
+        action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe"
+        method="POST"
+        class="form-lined           <!-- ← líneas verdes -->
                h-full flex flex-col justify-center
                bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
 
@@ -178,6 +179,10 @@
   </form>
 </div>
 
+
+  </div>
+</section>
+<!-- … resto del documento no cambia … -->
 <!-- FIN HERO ----------------------------------------------------------->
 
 
@@ -429,97 +434,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-  <!-- ==============  EXIT-INTENT & RECORDATORIO  ========================= -->
+  <!-- EXIT-INTENT POP-UP ================================================= -->
+<!-- Overlay oculto -->
+<div id="exitModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <!-- Tarjeta -->
+  <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      ¡Un momento! <span class="animate-pulse">🚀</span>
+    </h3>
+    <p class="text-lg leading-relaxed">
+      Estás a punto de perder la oportunidad de
+      <strong>cuidar tu piel <b>&</b> generar ingresos</strong>
+      compartiendo RIMAN.
+    </p>
 
-  <!-- ① Pop-up de salida -->
-  <div id="exitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-    <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
-      <button class="exitClose absolute top-3 right-4 text-2xl leading-none">&times;</button>
+    <!-- Botones -->
+<div class="flex flex-col gap-4">
+  <!-- ✅ CTA atractivo (ahora con id para JS) -->
+  <a id="ctaToForm"
+     href="#registro"
+     class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+    ¡Quiero cuidar mi piel y ganar!
+  </a>
 
-      <h3 class="text-2xl font-serif font-bold text-primary">
-        🤔 ¿Te vas sin antes conocer RIMAN?
-      </h3>
-      <p class="text-gray-700">
-        ¡Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong> al mismo tiempo!
-      </p>
-
-      <button id="ctaToForm"
-              class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-        ¡Quiero cuidar mi piel y ganar!
-      </button>
-
-      <button class="exitClose mt-2 text-sm underline text-gray-500">
-        Sí, me la pierdo
-      </button>
-    </div>
-  </div>
-
-  <!-- ② Recordatorio de formulario -->
-  <div id="formReminderModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-    <div class="bg-white max-w-md w-[90%] p-8 rounded-2xl text-center space-y-6 relative">
-      <button class="reminderClose absolute top-3 right-4 text-2xl leading-none">&times;</button>
-
-      <h3 class="text-2xl font-serif font-bold text-primary">
-        📝 ¡Un paso más!
-      </h3>
-      <p class="text-gray-700">
-        Completa el formulario y nuestro equipo te guiará para empezar a <strong>cuidar tu piel</strong> y <strong>generar ingresos</strong>.
-      </p>
-
-      <button class="reminderClose w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-        Entendido, voy al formulario
+      <!-- ❌ Salir -->
+      <button id="exitClose"
+              class="text-sm text-gray-500 underline decoration-dotted hover:text-gray-700">
+        Sí, me la pierdo 😔
       </button>
     </div>
   </div>
+</div>
 
-    <!-- ===== Pop-up lógica ===== -->
-  <script>
-  const $ = s => document.querySelector(s);
+<script>
+/* ---------- Lógica exit-intent ---------- */
+(function () {
+  const modal   = document.getElementById('exitModal');
+  const closeBtn= document.getElementById('exitClose');
+  const KEY     = 'riman-exit-shown';
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // Mostrar solo una vez por sesión
+  const showModal = () => {
+    if (sessionStorage.getItem(KEY)) return;
+    sessionStorage.setItem(KEY, '1');
+    modal.classList.remove('hidden');
+  };
 
-    /* ---------- Botones CERRAR ---------- */
-    document.querySelectorAll('.exitClose').forEach(btn =>
-      btn.addEventListener('click', () => {
-        $('#exitModal')?.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-      })
-    );
-
-    document.querySelectorAll('.reminderClose').forEach(btn =>
-      btn.addEventListener('click', () => {
-        $('#formReminderModal')?.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
-        // baja suave al formulario si existe la sección #registro
-        document.getElementById('registro')?.scrollIntoView({behavior:'smooth'});
-      })
-    );
-
-    /* ---------- Botón CTA en pop-up de salida ---------- */
-    $('#ctaToForm')?.addEventListener('click', () => {
-      $('#exitModal')?.classList.add('hidden');
-      $('#formReminderModal')?.classList.remove('hidden');
-    });
-
-
-    /* ---------- Exit-intent (una vez por sesión) ---------- */
-    if (!sessionStorage.getItem('exitPopShown')) {
-      const onMouseOut = e => {
-        if (e.clientY <= 0) {                        // cursor sale por arriba
-          sessionStorage.setItem('exitPopShown','1');
-          $('#exitModal')?.classList.remove('hidden');
-          document.body.classList.add('overflow-hidden');
-          window.removeEventListener('mouseout', onMouseOut);
-        }
-      };
-      window.addEventListener('mouseout', onMouseOut);
-    }
-
+  /* 1️⃣ Desktop: cursor sale por arriba */
+  document.addEventListener('mouseleave', e => {
+    if (e.clientY <= 0) showModal();
   });
-  </script>
-</body>
-</html>
+
+  /* 2️⃣ Mobile: scroll > 60 %  ✚  back button → history manipulation */
+  let fired = false;
+  window.addEventListener('scroll', () => {
+    if (fired) return;
+    const scrolled = window.scrollY / (document.body.scrollHeight - innerHeight);
+    if (scrolled > 0.6) { fired = true; showModal(); }
+  });
+
+  /* Back-button (sin jank): empujamos un estado */
+  if (history && history.pushState) {
+    history.pushState({ exit: false }, '');
+    window.addEventListener('popstate', e => {
+      if (!e.state || !e.state.exit) showModal();
+    });
+  }
+
+  /* Cerrar */
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click',  e => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+})();
+</script>
+<!-- ================================================================ -->
+
+  <!-- === Script que conecta el CTA del pop-up con el formulario === -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cta   = document.getElementById('ctaToForm');   // botón del pop-up
+  const modal = document.getElementById('exitModal');   // pop-up de salida
+  const remind = document.getElementById('formReminderModal'); // pop-up de recordatorio
+  const remindClose = document.getElementById('reminderClose'); // botón cerrar recordatorio
+
+  if (!cta || !modal || !remind) return;
+
+  /* Al hacer clic en “¡Quiero cuidar mi piel y ganar!” */
+  cta.addEventListener('click', e => {
+    e.preventDefault();                      // evita navegación directa
+    modal.classList.add('hidden');           // cierra pop-up de salida
+    document.body.classList.remove('overflow-hidden');
+
+    // muestra recordatorio
+    remind.classList.remove('hidden');
+  });
+
+  /* Cerrar recordatorio y hacer scroll suave al formulario */
+  remindClose.addEventListener('click', () => {
+    remind.classList.add('hidden');
+    document.getElementById('registro')?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
 
 </body>
 </html>
-
