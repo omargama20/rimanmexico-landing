@@ -527,14 +527,61 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('hidden');           // cierra pop-up de salida
     document.body.classList.remove('overflow-hidden');
 
-    // muestra recordatorio
-    remind.classList.remove('hidden');
+<!-- --- Recordatorio para llenar formulario --- -->
+<div id="formReminderModal"
+     class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white max-w-md w-[92%] p-8 rounded-2xl text-center space-y-6 relative">
+    <button id="reminderClose"
+            class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
+
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      🚀 ¡Estás a un paso!
+    </h3>
+
+    <p class="text-gray-700 leading-relaxed">
+      Completa este breve formulario y nuestro&nbsp;equipo te dará todo el soporte
+      para <strong>cuidar tu piel</strong> <em>y</em>
+      <strong>empezar a ganar ingresos</strong> con RIMAN.
+    </p>
+
+    <button id="reminderCloseBtn"
+            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      Entendido, voy al formulario
+    </button>
+  </div>
+});
+</script>
+
+  <!-- === Conexión CTA pop-up salida → pop-up recordatorio === -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const exitModal   = document.getElementById('exitModal');
+  const ctaToForm   = document.getElementById('ctaToForm');      // botón verde 1er pop-up
+  const remindModal = document.getElementById('formReminderModal');
+  const remindClose = document.getElementById('reminderClose');
+  const remindCloseBtn = document.getElementById('reminderCloseBtn');
+
+  if (!ctaToForm || !remindModal) return;
+
+  /* 1️⃣ Al hacer clic en “¡Quiero cuidar mi piel y ganar!” */
+  ctaToForm.addEventListener('click', e => {
+    e.preventDefault();                         // no navegamos aún
+    exitModal.classList.add('hidden');          // cerramos 1er pop-up
+    remindModal.classList.remove('hidden');     // mostramos 2º pop-up
   });
 
-  /* Cerrar recordatorio y hacer scroll suave al formulario */
-  remindClose.addEventListener('click', () => {
-    remind.classList.add('hidden');
-    document.getElementById('registro')?.scrollIntoView({ behavior: 'smooth' });
+  /* 2️⃣ Cerrar recordatorio y llevar suavemente al formulario */
+  const goForm = () => {
+    remindModal.classList.add('hidden');
+    document.getElementById('registro')
+            ?.scrollIntoView({ behavior: 'smooth' });
+  };
+  remindClose?.addEventListener('click', goForm);
+  remindCloseBtn?.addEventListener('click', goForm);
+
+  /* Clic fuera de la tarjeta = cerrar + scroll */
+  remindModal.addEventListener('click', e => {
+    if (e.target === remindModal) goForm();
   });
 });
 </script>
