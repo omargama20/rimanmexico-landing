@@ -434,11 +434,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-  <!-- EXIT-INTENT POP-UP ================================================= -->
-<!-- Overlay oculto -->
+ <!-- ==========================================================
+=  EXIT-INTENT (pop-up 1)  +  RECORDATORIO (pop-up 2)  ========
+========================================================== -->
+
+<!-- 1) Pop-up de exit-intent -->
 <div id="exitModal"
      class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <!-- Tarjeta -->
   <div class="bg-white rounded-2xl shadow-2xl w-[92%] max-w-md p-8 text-center space-y-6">
     <h3 class="text-2xl font-serif font-bold text-primary">
       ¡Un momento! <span class="animate-pulse">🚀</span>
@@ -449,14 +451,13 @@ document.addEventListener('DOMContentLoaded', () => {
       compartiendo RIMAN.
     </p>
 
-    <!-- Botones -->
-<div class="flex flex-col gap-4">
-  <!-- ✅ CTA atractivo (ahora con id para JS) -->
-  <a id="ctaToForm"
-     href="#registro"
-     class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-    ¡Quiero cuidar mi piel y ganar!
-  </a>
+    <div class="flex flex-col gap-4">
+      <!-- ✅ CTA atractivo -->
+      <a id="ctaToForm"
+         href="#registro"   <!-- se cancela por JS; aquí solo como fallback -->
+         class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+        ¡Quiero cuidar mi piel y ganar!
+      </a>
 
       <!-- ❌ Salir -->
       <button id="exitClose"
@@ -467,67 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<script>
-/* ---------- Lógica exit-intent ---------- */
-(function () {
-  const modal   = document.getElementById('exitModal');
-  const closeBtn= document.getElementById('exitClose');
-  const KEY     = 'riman-exit-shown';
-
-  // Mostrar solo una vez por sesión
-  const showModal = () => {
-    if (sessionStorage.getItem(KEY)) return;
-    sessionStorage.setItem(KEY, '1');
-    modal.classList.remove('hidden');
-  };
-
-  /* 1️⃣ Desktop: cursor sale por arriba */
-  document.addEventListener('mouseleave', e => {
-    if (e.clientY <= 0) showModal();
-  });
-
-  /* 2️⃣ Mobile: scroll > 60 %  ✚  back button → history manipulation */
-  let fired = false;
-  window.addEventListener('scroll', () => {
-    if (fired) return;
-    const scrolled = window.scrollY / (document.body.scrollHeight - innerHeight);
-    if (scrolled > 0.6) { fired = true; showModal(); }
-  });
-
-  /* Back-button (sin jank): empujamos un estado */
-  if (history && history.pushState) {
-    history.pushState({ exit: false }, '');
-    window.addEventListener('popstate', e => {
-      if (!e.state || !e.state.exit) showModal();
-    });
-  }
-
-  /* Cerrar */
-  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-  modal.addEventListener('click',  e => {
-    if (e.target === modal) modal.classList.add('hidden');
-  });
-})();
-</script>
-<!-- ================================================================ -->
-
-  <!-- === Script que conecta el CTA del pop-up con el formulario === -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cta   = document.getElementById('ctaToForm');   // botón del pop-up
-  const modal = document.getElementById('exitModal');   // pop-up de salida
-  const remind = document.getElementById('formReminderModal'); // pop-up de recordatorio
-  const remindClose = document.getElementById('reminderClose'); // botón cerrar recordatorio
-
-  if (!cta || !modal || !remind) return;
-
-  /* Al hacer clic en “¡Quiero cuidar mi piel y ganar!” */
-  cta.addEventListener('click', e => {
-    e.preventDefault();                      // evita navegación directa
-    modal.classList.add('hidden');           // cierra pop-up de salida
-    document.body.classList.remove('overflow-hidden');
-
-<!-- --- Recordatorio para llenar formulario --- -->
+<!-- 2) Pop-up recordatorio (se abre tras el CTA del anterior) -->
 <div id="formReminderModal"
      class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
   <div class="bg-white max-w-md w-[92%] p-8 rounded-2xl text-center space-y-6 relative">
@@ -540,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <p class="text-gray-700 leading-relaxed">
       Completa este breve formulario y nuestro&nbsp;equipo te dará todo el soporte
-      para <strong>cuidar tu piel</strong> <em>y</em>
+      para <strong>cuidar tu piel</strong> y
       <strong>empezar a ganar ingresos</strong> con RIMAN.
     </p>
 
@@ -549,43 +490,89 @@ document.addEventListener('DOMContentLoaded', () => {
       Entendido, voy al formulario
     </button>
   </div>
-});
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+/* ---------- Exit-intent logic ---------- */
+(() => {
+  const modal   = document.getElementById('exitModal');
+  const closeBtn= document.getElementById('exitClose');
+  const KEY     = 'riman-exit-shown';
+
+  const showModal = () => {
+    if (sessionStorage.getItem(KEY)) return;      // solo 1 vez por sesión
+    sessionStorage.setItem(KEY, '1');
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+  };
+
+  /* Desktop: cursor sale por arriba */
+  document.addEventListener('mouseleave', e => {
+    if (e.clientY <= 0) showModal();
+  });
+
+  /* Mobile: scroll >60 % */
+  let fired = false;
+  window.addEventListener('scroll', () => {
+    if (fired) return;
+    const scrolled = window.scrollY / (document.body.scrollHeight - innerHeight);
+    if (scrolled > 0.6) { fired = true; showModal(); }
+  });
+
+  /* Back-button */
+  if (history && history.pushState) {
+    history.pushState({ exit: false }, '');
+    window.addEventListener('popstate', e => {
+      if (!e.state || !e.state.exit) showModal();
+    });
+  }
+
+  /* Cerrar pop-up 1 */
+  closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  });
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+  });
+})();
 </script>
 
-  <!-- === Conexión CTA pop-up salida → pop-up recordatorio === -->
 <script>
+/* ---------- Conexión CTA → pop-up 2 y scroll al formulario ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   const exitModal   = document.getElementById('exitModal');
-  const ctaToForm   = document.getElementById('ctaToForm');      // botón verde 1er pop-up
+  const ctaToForm   = document.getElementById('ctaToForm');
   const remindModal = document.getElementById('formReminderModal');
   const remindClose = document.getElementById('reminderClose');
   const remindCloseBtn = document.getElementById('reminderCloseBtn');
 
   if (!ctaToForm || !remindModal) return;
 
-  /* 1️⃣ Al hacer clic en “¡Quiero cuidar mi piel y ganar!” */
-  ctaToForm.addEventListener('click', e => {
-    e.preventDefault();                         // no navegamos aún
-    exitModal.classList.add('hidden');          // cerramos 1er pop-up
-    remindModal.classList.remove('hidden');     // mostramos 2º pop-up
-  });
+  /* Mostrar recordatorio */
+  const openReminder = () => {
+    exitModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+    remindModal.classList.remove('hidden');
+  };
 
-  /* 2️⃣ Cerrar recordatorio y llevar suavemente al formulario */
+  /* Ir al formulario y cerrar todo */
   const goForm = () => {
     remindModal.classList.add('hidden');
-    document.getElementById('registro')
-            ?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('registro')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  ctaToForm.addEventListener('click', e => { e.preventDefault(); openReminder(); });
   remindClose?.addEventListener('click', goForm);
   remindCloseBtn?.addEventListener('click', goForm);
-
-  /* Clic fuera de la tarjeta = cerrar + scroll */
-  remindModal.addEventListener('click', e => {
-    if (e.target === remindModal) goForm();
-  });
+  remindModal.addEventListener('click', e => { if (e.target === remindModal) goForm(); });
 });
 </script>
-
+<!-- ================================================================ -->
 
 </body>
 </html>
