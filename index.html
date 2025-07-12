@@ -435,21 +435,43 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
  <!-- ==========================================================
-<!-- 2) Pop-up recordatorio (se abre tras el CTA del anterior) -->
+<!-- ================ POP-UP 1 · exit-intent ================= -->
+<div id="exitModal"
+     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6">
+    <h3 class="text-2xl font-serif font-bold text-primary">
+      ¡Un momento! 🚀
+    </h3>
+    <p class="text-lg leading-relaxed">
+      Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong>
+      compartiendo RIMAN.
+    </p>
+
+    <a id="ctaToForm"
+       href="#registro"
+       class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition block">
+       ¡Quiero cuidar mi piel y ganar!
+    </a>
+
+    <button id="exitClose"
+            class="text-sm mt-2 text-gray-500 underline decoration-dotted hover:text-gray-700">
+      Sí, me la pierdo 😔
+    </button>
+  </div>
+</div>
+
+<!-- ================ POP-UP 2 · recordatorio ================= -->
 <div id="formReminderModal"
      class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <div class="bg-white max-w-md w-[92%] p-8 rounded-2xl text-center space-y-6 relative">
+  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6 relative">
     <button id="reminderClose"
             class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
 
-    <h3 class="text-2xl font-serif font-bold text-primary">
-      🚀 ¡Estás a un paso!
-    </h3>
+    <h3 class="text-2xl font-serif font-bold text-primary">🚀 ¡Estás a un paso!</h3>
 
-    <p class="text-gray-700 leading-relaxed">
-      Completa este breve formulario y nuestro&nbsp;equipo te dará todo el soporte
-      para <strong>cuidar tu piel</strong> y
-      <strong>empezar a ganar ingresos</strong> con RIMAN.
+    <p class="text-gray-700">
+      Completa este breve formulario y nuestro equipo te guiará para
+      <strong>cuidar tu piel</strong> y <strong>empezar a ganar ingresos</strong>.
     </p>
 
     <button id="reminderCloseBtn"
@@ -459,77 +481,72 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 
-<!-- ========== SCRIPTS ========== -->
+<!-- ================  SCRIPTS  ======================================== -->
 <script>
-/* ---------- Exit-intent (pop-up 1) ---------- */
-(() => {
-  const modal    = document.getElementById('exitModal');
-  const closeBtn = document.getElementById('exitClose');
-  const KEY      = 'riman-exit-shown';
+/* -------- Helper -------- */
+const $ = sel => document.querySelector(sel);
 
-  const showModal = () => {
-    if (sessionStorage.getItem(KEY)) return;      // 1 vez / sesión
+/* -------- POP-UP 1  (exit-intent) -------- */
+(() => {
+  if (!$('#exitModal')) { console.warn('❗ Falta #exitModal en el HTML'); return; }
+
+  const KEY = 'riman-exit-shown';
+
+  const showExit = () => {
+    if (sessionStorage.getItem(KEY)) return;        // 1 vez por sesión
     sessionStorage.setItem(KEY, '1');
-    modal.classList.remove('hidden');
+    $('#exitModal').classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   };
 
-  /* Desktop: cursor sale por arriba */
-  document.addEventListener('mouseleave', e => { if (e.clientY <= 0) showModal(); });
+  /* Cursor sale por arriba (desktop) */
+  document.addEventListener('mouseleave', e => { if (e.clientY <= 0) showExit(); });
 
-  /* Mobile: scroll > 60 % */
+  /* Scroll > 60 % (mobile) */
   let fired = false;
-  window.addEventListener('scroll', () => {
+  addEventListener('scroll', () => {
     if (fired) return;
-    const ratio = window.scrollY / (document.body.scrollHeight - innerHeight);
-    if (ratio > 0.6) { fired = true; showModal(); }
+    const ratio = scrollY / (document.body.scrollHeight - innerHeight);
+    if (ratio > 0.6) { fired = true; showExit(); }
   });
 
-  /* Back-button (history trick) */
+  /* Back button */
   if (history.pushState) {
     history.pushState({ exit:false }, '');
-    window.addEventListener('popstate', e => { if (!e.state || !e.state.exit) showModal(); });
+    addEventListener('popstate', e => { if (!e.state || !e.state.exit) showExit(); });
   }
 
   /* Cerrar pop-up 1 */
-  const close = () => { modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); };
-  closeBtn.addEventListener('click', close);
-  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  $('#exitClose').onclick = () => { $('#exitModal').classList.add('hidden');
+                                    document.body.classList.remove('overflow-hidden'); };
+  $('#exitModal').onclick = e => { if (e.target.id === 'exitModal')
+                                     $('#exitClose').click(); };
 })();
-</script>
 
-<script>
-/* ---------- CTA “Quiero cuidar mi piel…” → pop-up 2 → scroll formulario ---------- */
+/* -------- Conexión CTA → POP-UP 2 → Form -------- */
 document.addEventListener('DOMContentLoaded', () => {
-  const exitModal    = document.getElementById('exitModal');          // pop-up 1
-  const ctaToForm    = document.getElementById('ctaToForm');          // botón verde
-  const remindModal  = document.getElementById('formReminderModal');  // pop-up 2
-  const remindCloseX = document.getElementById('reminderClose');      // “×”
-  const remindBtn    = document.getElementById('reminderCloseBtn');   // botón verde pop-up 2
+  if (!$('#ctaToForm') || !$('#formReminderModal')) {
+    console.warn('❗ Faltan #ctaToForm o #formReminderModal'); return;
+  }
 
-  if (!ctaToForm || !remindModal) return;
-
-  /* Mostrar pop-up 2 */
-  ctaToForm.addEventListener('click', e => {
-    e.preventDefault();                    // evita salto al #registro
-    exitModal.classList.add('hidden');     // cierra pop-up 1
+  /* Abrir recordatorio */
+  $('#ctaToForm').onclick = e => {
+    e.preventDefault();
+    $('#exitModal').classList.add('hidden');
     document.body.classList.remove('overflow-hidden');
-    remindModal.classList.remove('hidden');
-  });
-
-  /* Cierra pop-up 2 y hace scroll al formulario */
-  const goForm = () => {
-    remindModal.classList.add('hidden');
-    document.getElementById('registro')
-            ?.scrollIntoView({ behavior:'smooth', block:'center' });
+    $('#formReminderModal').classList.remove('hidden');
   };
 
-  remindCloseX.addEventListener('click', goForm);
-  remindBtn   .addEventListener('click', goForm);
-  remindModal .addEventListener('click', e => { if (e.target === remindModal) goForm(); });
+  /* Función que cierra pop-up 2 y hace scroll al form */
+  const goForm = () => {
+    $('#formReminderModal').classList.add('hidden');
+    $('#registro')?.scrollIntoView({ behavior:'smooth', block:'center' });
+  };
+
+  $('#reminderClose')   ?.addEventListener('click', goForm);
+  $('#reminderCloseBtn')?.addEventListener('click', goForm);
+  $('#formReminderModal').onclick = e => { if (e.target.id === 'formReminderModal') goForm(); };
 });
 </script>
 <!-- ================================================================ -->
-</body>
-</html>
 
