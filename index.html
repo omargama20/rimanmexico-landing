@@ -30,13 +30,13 @@
   <link rel="canonical" href="https://www.rimanmexico.store"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <!-- Fuentes de Google -->
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Alpine JS para el carrusel ------------------------------->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Alpine -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -49,14 +49,11 @@
             sans : ['Inter', 'system-ui', 'sans-serif'],
           },
           colors: {
-            primary   : '#244A39', // verde profundo RIMAN
-            secondary : '#F2EFEA', // beige claro
-            accent    : '#76917F', // verde medio
+            primary   : '#244A39',
+            secondary : '#F2EFEA',
+            accent    : '#76917F',
           },
-          borderRadius: {
-            'xl' : '1.25rem',
-            '2xl': '1.75rem',
-          },
+          borderRadius: { 'xl':'1.25rem', '2xl':'1.75rem' },
         },
       },
     };
@@ -85,45 +82,67 @@
   }
   </script>
 
+  <!-- Estilo original -->
   <style>
-  /* fondo rayado sólo para el contenedor del formulario */
-  .form-lined{
-    background-image:
-      repeating-linear-gradient(
-        to bottom,
-        transparent 0px,
-        transparent 26px,
-        #244A39 26px,
-        #244A39 28px;    /* grosor de la línea */
-      );
-    background-size: 100% 28px;      /* distancia entre líneas */
-  }
+    .form-lined{
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 26px,
+          #244A39 26px,
+          #244A39 28px
+        );
+      background-size: 100% 28px;
+    }
   </style>
 
-  <!-- Favicon (logo en la pestaña) -->
-<link rel="icon"
-      href="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/eeafcdab5e7d1f8e62a535433b52b9ffb511b091/favicon.ico"
-      type="image/x-icon">
+  <!-- Override: Opción C + tipografía (solo CSS, SEO intacto) -->
+  <style>
+    .form-lined{
+      background:
+        radial-gradient(120% 120% at 0% 0%, rgba(36,74,57,.06), transparent 60%),
+        radial-gradient(120% 120% at 100% 100%, rgba(36,74,57,.05), transparent 60%),
+        rgba(255,255,255,.92) !important;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(36,74,57,.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+    }
+    #registro h3{
+      font-size: clamp(1.9rem, 1.2rem + 1.4vw, 2.4rem) !important;
+      line-height: 1.2; letter-spacing: -.01em;
+    }
+    #registro p:first-of-type{
+      font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.2rem) !important;
+      line-height: 1.45; color: #2f3f38;
+    }
+    #registro a{
+      font-size: clamp(1rem, 0.95rem + 0.35vw, 1.125rem);
+      padding-block: clamp(12px, 1.2vw, 16px);
+      border-radius: 14px; font-weight: 700;
+    }
+  </style>
 
+  <!-- Favicon -->
+  <link rel="icon" href="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/eeafcdab5e7d1f8e62a535433b52b9ffb511b091/favicon.ico" type="image/x-icon">
 </head>
 
 <body class="font-sans text-primary bg-white">
-<!-- HEADER -------------------------------------------------------------->
+<!-- HEADER -->
 <header class="bg-secondary text-primary py-6">
   <div class="container mx-auto px-6 flex justify-center">
     <a href="/" class="flex">
-      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RIMAN_LOGO_PNG__1_-removebg-preview.png"
-           alt="RIMAN México"
-           class="h-16 md:h-24">
+      <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RIMAN_LOGO_PNG__1_-removebg-preview.png" alt="RIMAN México" class="h-16 md:h-24">
     </a>
   </div>
 </header>
 
-<!-- HERO – Video + Formulario ------------------------------------------>
+<!-- HERO -->
 <section class="bg-[url('https://static.videezy.com/system/resources/thumbnails/000/041/687/original/02.jpg')] bg-cover bg-center py-12 lg:py-20">
   <div class="container mx-auto px-6 grid gap-10 lg:grid-cols-12 items-start">
 
-    <!-- Columna IZQ — Texto + Vídeo -->
+    <!-- IZQ -->
     <div class="lg:col-span-6">
       <h1 class="font-serif font-semibold text-brand text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
         RIMAN&nbsp;|<br class="hidden sm:inline">Marca #1 de<br class="sm:hidden">Skincare Coreano
@@ -138,81 +157,57 @@
       </p>
 
       <div class="aspect-[9/16] max-w-[370px] lg:max-w-[400px] mx-auto lg:ml-0 rounded-2xl overflow-hidden shadow-lg">
-        <iframe
-          class="w-full h-full"
+        <iframe class="w-full h-full"
           src="https://www.youtube.com/embed/iTAC0QcyhCA?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1"
-          title="Presentación RIMAN México"
-          loading="lazy"
-          allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
+          title="Presentación RIMAN México" loading="lazy" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
     </div>
 
-   <!-- Columna DER — Formulario -->
-<div class="lg:col-span-6 h-full">
-  <form id="registro"
-        action="https://hook.us2.make.com/b8y5l9p4oancrin3hyqwj7tsdu45q3oe"
-        method="POST"
-        class="form-lined           <!-- ← líneas verdes -->
-               h-full flex flex-col justify-center
-               bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5">
+    <!-- DER: Card con CTAs -->
+    <div class="lg:col-span-6 h-full">
+      <div id="registro"
+           class="form-lined h-full flex flex-col justify-center bg-white/90 backdrop-blur p-8 rounded-2xl shadow-2xl space-y-5"
+           role="group" aria-label="Opciones de contacto">
 
-    <h3 class="text-center text-2xl md:text-3xl font-serif font-bold text-primary">
-      ¿Te interesa la oportunidad?
-    </h3>
-    <p class="text-center text-sm text-gray-700">
-      Déjanos tus datos y recibe toda la información:<br>
-      plan de comisiones, testimonios, casos de éxito, etc.
-    </p>
+        <h3 class="text-center text-2xl md:text-3xl font-serif font-bold text-primary">¿Te interesa la oportunidad?</h3>
+        <p class="text-center text-sm text-gray-700">Elige cómo prefieres continuar: grupo VIP o chat directo por WhatsApp.</p>
 
-    <input type="text"  name="name"  placeholder="Nombre"
-           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
-    <input type="email" name="email" placeholder="Email"
-           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40" required>
-    <input type="tel"   name="phone" placeholder="WhatsApp (opcional)"
-           class="w-full border border-primary/30 rounded-lg p-3 focus:ring-2 focus:ring-primary/40">
+        <!-- Grupo VIP -->
+        <a href="https://chat.whatsapp.com/BrrViytVUoG0jsA3lO7QTy?mode=gi_t"
+           target="_blank" rel="noopener"
+           class="block w-full text-center bg-[#25D366] text-white font-semibold py-3 rounded-xl hover:brightness-110 transition">
+          Unirme al Grupo VIP de WhatsApp
+        </a>
 
-    <input type="hidden" name="source" value="Landing RIMAN Hero">
+        <!-- 1 a 1 (dinámico) -->
+        <a class="block w-full text-center border-2 border-primary text-primary font-semibold py-3 rounded-xl hover:bg-primary hover:text-white transition cta-wa"
+           data-msg="Hola {{NOMBRE}}, vengo de tu página y quiero info para ser Planner.">
+          Hablar 1 a 1 por WhatsApp
+        </a>
 
-    <button type="submit"
-            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-      ¡Quiero más información!
-    </button>
+        <p class="text-xs text-center text-gray-500">Cero spam — solo material oficial de RIMAN.</p>
 
-    <p class="text-xs text-center text-gray-500">
-      Cero spam — solo material oficial de RIMAN.
-    </p>
-  </form>
-</div>
-
-
+        <noscript>
+          <p class="text-center mt-2">
+            <a href="https://wa.me/5256396842" target="_blank" rel="noopener">Si no ves los botones, haz clic aquí</a>
+          </p>
+        </noscript>
+      </div>
+    </div>
   </div>
 </section>
-<!-- … resto del documento no cambia … -->
-<!-- FIN HERO ----------------------------------------------------------->
 
-
-<!-- contenedor del video -->
-<div
-  class="relative overflow-hidden rounded-2xl shadow-xl
-         h-60 sm:h-72            <!-- móviles -->
-         md:h-[32rem] lg:h-[38rem]  <!-- desktop: más alto -->
-">
-  <video
-    autoplay muted loop playsinline
+<!-- VIDEO ancho -->
+<div class="relative overflow-hidden rounded-2xl shadow-xl h-60 sm:h-72 md:h-[32rem] lg:h-[38rem]">
+  <video autoplay muted loop playsinline
     src="https://storage.googleapis.com/msgsndr/UcxGkvLuy8V3yqxG177R/media/685399416d64484236eec62b.mp4"
-    class="w-full h-full object-contain md:object-cover"
-  ></video>
+    class="w-full h-full object-contain md:object-cover"></video>
 </div>
 
-<!-- FIN VIDEO ------------------------------------------------------------>
-  
-<!-- Beneficios de Producto -->
+<!-- BENEFICIOS -->
 <section class="py-16 bg-secondary" id="productos">
   <div class="container mx-auto px-6">
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">
-      ¿Por qué tu piel amará RIMAN?
-    </h2>
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">¿Por qué tu piel amará RIMAN?</h2>
     <div class="grid gap-8 md:grid-cols-3">
       <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
         <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/UcxGkvLuy8V3yqxG177R/media/68157f46db0184b22787a928.png" alt="Ingredientes premium coreanos" loading="lazy" class="mx-auto mb-4 w-24 h-24" />
@@ -233,26 +228,18 @@
   </div>
 </section>
 
-  <!-- Vídeo / Historia de Marca -->
+<!-- HISTORIA -->
 <section class="py-20" id="historia">
   <div class="container mx-auto px-6 grid md:grid-cols-12 gap-10 items-center">
-
-    <!-- VÍDEO (7/12 columnas) -->
     <div class="md:col-span-7">
       <div class="aspect-video md:aspect-[3/2] rounded-2xl overflow-hidden shadow-lg">
-        <video id="ritualVideo"
-       src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
-       class="w-full h-full object-cover rounded-2xl"
-       autoplay muted controls playsinline></video>
+        <video id="ritualVideo" src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/RITUAL_RIMAN_7_PASOS.mp4"
+               class="w-full h-full object-cover rounded-2xl" autoplay muted controls playsinline></video>
       </div>
     </div>
-
-    <!-- TEXTO (5/12 columnas) -->
     <div class="md:col-span-5 space-y-4">
       <h2 class="text-3xl font-bold text-brand">Ritual RIMAN&nbsp;| 7 Pasos</h2>
-
       <p>Activa tu brillo interior con nuestra rutina de siete pasos —un viaje sensorial que transforma el cuidado facial en un momento de auténtico bienestar:</p>
-
       <ul class="list-disc pl-5 space-y-2">
         <li><strong>Polvo Limpiador Activo:</strong> limpia y exfolia suavemente para revelar una textura de piel ultrasuave.</li>
         <li><strong>Mist de Aceite de Vieton:</strong> una niebla nutritiva que sella hidratación y deja un velo luminoso.</li>
@@ -262,121 +249,52 @@
         <li><strong>Crema Activa EX:</strong> antioxidantes patentados para ese inconfundible <em>RIMAN glow</em>.</li>
         <li><strong>Daily Aqua BB:</strong> cobertura ligera y radiante que unifica el tono durante todo el día.</li>
       </ul>
-
       <p>Sigue el ritual y siente la diferencia desde la primera aplicación. Tu piel, pero mejor: radiante, equilibrada y llena de vida.</p>
     </div>
-
   </div>
 </section>
-<!-- FIN VIDEO / Historia de Marca -->
 
-  
-    <!-- BOTÓN CTA: QUIERO LOS PRODUCTOS -->
-<div class="md:col-span-12 flex justify-center mt-20 mb-20">   <!-- NUEVO: flex + mt-20 mb-20 -->
-  <a href="https://mall.riman.com/vicencionetwork/home"
-     target="_blank" rel="noopener"
-     class="inline-block bg-primary text-white font-semibold text-lg  <!-- text-lg ⇒ + grande -->
-            px-20 py-6 rounded-2xl shadow-xl                    <!-- px-20 / py-6 ⇒ 2× de tamaño -->
-            hover:bg-primary/90 transition">
+<!-- CTA PRODUCTOS -->
+<div class="md:col-span-12 flex justify-center mt-20 mb-20">
+  <a href="https://mall.riman.com/vicencionetwork/home" target="_blank" rel="noopener"
+     class="inline-block bg-primary text-white font-semibold text-lg px-20 py-6 rounded-2xl shadow-xl hover:bg-primary/90 transition">
     ¡Quiero los productos!
   </a>
 </div>
-<!-- … Botón “¡Quiero los productos!” … -->
 
-
-  
-<!-- =========================================================
-===  RESULTADOS REALES  – Carrusel manual sin autoplay  ======
-========================================================== -->
+<!-- TESTIMONIOS / CARRUSEL -->
 <section class="py-16 bg-secondary" id="resultados">
   <div class="container mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">Resultados Reales</h2>
 
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">
-      Resultados Reales
-    </h2>
-
-    <!-- wrapper centrado, con ancho fijo para que no “salte” -->
-    <div id="carouselWrap"
-         class="relative mx-auto w-full max-w-[440px] md:max-w-[520px]">
-
-      <!-- === diapositivas === -->
-      <div class="carousel-slide">  <!-- visible al inicio -->
-        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png"
-             alt="Testimonio RIMAN" class="w-full rounded-2xl shadow-xl">
+    <div id="carouselWrap" class="relative mx-auto w-full max-w-[440px] md:max-w-[520px]">
+      <div class="carousel-slide">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN.png" alt="Testimonio RIMAN" class="w-full rounded-2xl shadow-xl">
       </div>
-
       <div class="carousel-slide hidden">
-        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/27dfd2246a4d8248491b62ecf020f49b6bb05aff/TESTIMONIO_RIMAN_5.png"
-             alt="Testimonio RIMAN 2" class="w-full rounded-2xl shadow-xl">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/27dfd2246a4d8248491b62ecf020f49b6bb05aff/TESTIMONIO_RIMAN_5.png" alt="Testimonio RIMAN 2" class="w-full rounded-2xl shadow-xl">
       </div>
-
       <div class="carousel-slide hidden">
-        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png"
-             alt="Testimonio RIMAN 3" class="w-full rounded-2xl shadow-xl">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_3.png" alt="Testimonio RIMAN 3" class="w-full rounded-2xl shadow-xl">
       </div>
-
       <div class="carousel-slide hidden">
-        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png"
-             alt="Testimonio RIMAN 4" class="w-full rounded-2xl shadow-xl">
+        <img src="https://raw.githubusercontent.com/omargama20/rimanmexico-landing/main/TESTIMONIOS_RIMAN_4.png" alt="Testimonio RIMAN 4" class="w-full rounded-2xl shadow-xl">
       </div>
 
-      <!-- === Flechas === -->
-      <button id="prevBtn"
-              class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90
-                     border border-primary rounded-full w-10 h-10 flex
-                     items-center justify-center shadow hover:bg-primary
-                     hover:text-white transition">
-        &#10094;
-      </button>
-
-      <button id="nextBtn"
-              class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90
-                     border border-primary rounded-full w-10 h-10 flex
-                     items-center justify-center shadow hover:bg-primary
-                     hover:text-white transition">
-        &#10095;
-      </button>
+      <button id="prevBtn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 border border-primary rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-primary hover:text-white transition">&#10094;</button>
+      <button id="nextBtn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 border border-primary rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-primary hover:text-white transition">&#10095;</button>
     </div>
 
-    <!-- botón CTA debajo del carrusel -->
     <div class="flex justify-center mt-10">
-      <a href="https://mall.riman.com/vicencionetwork/home"
-         target="_blank" rel="noopener"
-         class="inline-block bg-primary text-white font-semibold text-lg
-                px-20 py-4 rounded-xl shadow-xl hover:bg-primary/90 transition">
+      <a href="https://mall.riman.com/vicencionetwork/home" target="_blank" rel="noopener"
+         class="inline-block bg-primary text-white font-semibold text-lg px-20 py-4 rounded-xl shadow-xl hover:bg-primary/90 transition">
         ¡Quiero los productos!
       </a>
     </div>
-
   </div>
 </section>
 
-<!-- =========  JS del carrusel (sin autoplay)  =============== -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const slides = document.querySelectorAll('#carouselWrap .carousel-slide');
-  const prev   = document.getElementById('prevBtn');
-  const next   = document.getElementById('nextBtn');
-  if (!slides.length) return;
-
-  let pos = 0;
-
-  const show = i => {
-    slides.forEach((s, n) => s.classList.toggle('hidden', n !== i));
-    pos = i;
-  };
-
-  prev.addEventListener('click', () =>
-    show((pos - 1 + slides.length) % slides.length));
-
-  next.addEventListener('click', () =>
-    show((pos + 1) % slides.length));
-});
-</script>
-
-
-
-<!-- Oportunidad de Negocio -->
+<!-- OPORTUNIDAD -->
 <section class="py-16 bg-primary text-white" id="negocio">
   <div class="container mx-auto px-6 text-center">
     <h2 class="text-3xl md:text-4xl font-bold mb-6">Gana Dinero Compartiendo Belleza</h2>
@@ -399,259 +317,183 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 
-<!-- Testimonios – versión realista -->
-<section id="testimonios" class="py-16">
-  <div class="container mx-auto px-6">
-    <h2 class="text-3xl md:text-4xl font-bold text-center text-brand mb-12">
-      Historias de Éxito RIMAN&nbsp;México
-    </h2>
-
-    <div class="grid gap-8 md:grid-cols-3">
-      <!-- Testimonio 1 -->
-      <blockquote class="bg-white shadow-lg rounded-2xl p-6">
-        <p class="italic mb-4">
-          “En mi primer mes recuperé la inversión inicial y mis amigas ya notan
-          mi piel más luminosa.”
-        </p>
-        <footer class="font-semibold">— Sofía, Guadalajara</footer>
-      </blockquote>
-
-      <!-- Testimonio 2 -->
-      <blockquote class="bg-white shadow-lg rounded-2xl p-6">
-        <p class="italic mb-4">
-          “Me había cansado de este modelo de Negocio, pero en RIMAN vi algo distinto, ya soy Manager.”
-        </p>
-        <footer class="font-semibold">— Diego, CDMX</footer>
-      </blockquote>
-
-      <!-- Testimonio 3 -->
-      <blockquote class="bg-white shadow-lg rounded-2xl p-6">
-        <p class="italic mb-4">
-          “El ritual redujo la sensibilidad de mi piel por mi dermatitis, y además gano por compartirlo.”
-        </p>
-        <footer class="font-semibold">— Carla, Monterrey</footer>
-      </blockquote>
-    </div>
-  </div>
-</section>
-
- <!-- CTA final con doble opción · versión ultra-llamativa -->
+<!-- CTA FINAL 2 BOTONES -->
 <section class="relative overflow-hidden py-24">
-  <!-- Fondo degradado + destello -->
   <div class="absolute inset-0 bg-gradient-to-br from-accent to-primary/80"></div>
   <div class="absolute -top-32 -left-32 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
   <div class="relative container mx-auto px-6 text-center text-white space-y-10">
-
-    <h2 class="text-4xl md:text-5xl font-serif font-bold drop-shadow-lg">
-      ¿Listo para crear tu propia historia?
-    </h2>
-
-    <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">
-      Elige cómo quieres empezar: charla directa por WhatsApp o deja tus datos y recibe toda la info en tu correo.
-    </p>
+    <h2 class="text-4xl md:text-5xl font-serif font-bold drop-shadow-lg">¿Listo para crear tu propia historia?</h2>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">Elige cómo quieres empezar: charla directa 1 a 1 o ingresa a nuestro Grupo VIP.</p>
 
     <div class="flex flex-col sm:flex-row gap-6 justify-center">
-      <!-- WhatsApp -->
-    <!-- WhatsApp (versión sin solapar el texto) -->
-<a href="https://wa.me/525659822004?text=Hola%2C%20quiero%20unirme%20a%20RIMAN%20🙂"
-   target="_blank" rel="noopener"
-   class="relative inline-flex items-center gap-3             <!-- 👈 gap -->
-          px-10 py-4 rounded-full font-semibold text-lg
-          bg-[#25D366] text-white shadow-xl shadow-[#25D366]/40
-          hover:scale-105 active:scale-100 transition">
+      <!-- 1 a 1 dinámico -->
+      <a class="relative inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg bg-[#25D366] text-white shadow-xl shadow-[#25D366]/40 hover:scale-105 active:scale-100 transition cta-wa"
+         data-msg="Hola {{NOMBRE}}, me interesa la oportunidad para ser Planner.">
+        <span class="text-2xl leading-none">💬</span>
+        <span>Chatear 1 a 1 por WhatsApp</span>
+        <span class="absolute inset-0 rounded-full bg-[#25D366]/60 animate-ping-slow pointer-events-none"></span>
+      </a>
 
-  <span class="text-2xl leading-none">💬</span>
-  <span>Chatear por WhatsApp</span>
-
-  <!-- pulso -->
-  <span class="absolute inset-0 rounded-full bg-[#25D366]/60
-               animate-ping-slow pointer-events-none"></span>
-</a>
-
-
-      <!-- Formulario -->
-      <a href="#registro"
-         class="group inline-flex items-center gap-2 px-10 py-4 rounded-full
-                font-semibold text-lg text-primary bg-white/90
-                hover:bg-white shadow-xl transition">
-        📝 Prefiero dejar mis datos
-        <span class="block w-0 h-0.5 bg-primary transition-all
-                     group-hover:w-full"></span>
+      <!-- Grupo VIP -->
+      <a href="https://chat.whatsapp.com/BrrViytVUoG0jsA3lO7QTy?mode=gi_t" target="_blank" rel="noopener"
+         class="group inline-flex items-center gap-2 px-10 py-4 rounded-full font-semibold text-lg text-primary bg-white/90 hover:bg-white shadow-xl transition">
+        👥 Entrar al Grupo VIP
+        <span class="block w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- SCRIPTS VL -->
+<!-- Carrusel JS -->
 <script>
-/* Carrusel simple */
-document.addEventListener('DOMContentLoaded',()=>{
-  const slides=document.querySelectorAll('#carouselWrap .carousel-slide');
-  const prev=document.getElementById('prevBtn');
-  const next=document.getElementById('nextBtn');
-  if(!slides.length)return;
-  let pos=0;
-  const show=i=>{slides.forEach((s,n)=>s.classList.toggle('hidden',n!==i));pos=i;};
-  prev.addEventListener('click',()=>show((pos-1+slides.length)%slides.length));
-  next.addEventListener('click',()=>show((pos+1)%slides.length));
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('#carouselWrap .carousel-slide');
+  const prev   = document.getElementById('prevBtn');
+  const next   = document.getElementById('nextBtn');
+  if (!slides.length) return;
+  let pos = 0;
+  const show = i => { slides.forEach((s,n)=>s.classList.toggle('hidden', n!==i)); pos = i; };
+  prev.addEventListener('click', () => show((pos - 1 + slides.length) % slides.length));
+  next.addEventListener('click', () => show((pos + 1) % slides.length));
 });
 </script>
 
-<!-- POP-UPs (mismo JS que ya tenías) -->
-<!-- … se mantiene todo el bloque de JS exit-intent / recordatorio … -->
+<!-- Script: reescribe CTA 1-a-1 a WhatsApp correcto -->
+<script>
+(function(){
+  const DEFAULT_REP = { key:'default', name:'Equipo RIMAN', wa:'5256396842' }; // fallback 1-a-1
 
-</body>
-</html>
-
-
-<!-- Tailwind @keyframes personalizadas -->
-<style>
-@layer utilities{
-  @keyframes ping-slow{
-    0%  { transform: scale(1);   opacity:.6 }
-    60% { transform: scale(1.3); opacity:0  }
-    100%{ transform: scale(1.3); opacity:0  }
+  function detectRepSync(reps){
+    const pathKey = location.pathname.replace(/^\/|\/$/g,'');
+    const qKey    = new URLSearchParams(location.search).get('rep');
+    if (reps && pathKey && reps[pathKey]) return { key:pathKey, ...reps[pathKey] };
+    if (reps && qKey   && reps[qKey])     return { key:qKey,  ...reps[qKey]  };
+    return { ...DEFAULT_REP };
   }
-  .animate-ping-slow{
-    animation: ping-slow 2.5s cubic-bezier(0,0,.2,1) infinite;
+  async function detectRep(){
+    try{
+      const r = await fetch('/reps.json', { cache:'no-store' });
+      if(!r.ok) throw 0;
+      const cfg = await r.json();
+      return detectRepSync(cfg.reps || null);
+    }catch(_){ return detectRepSync(null); }
   }
-}
-</style>
-  
-      <script>
-/* Reproduce / pausa el vídeo cuando entra o sale del viewport */
+
+  document.addEventListener('DOMContentLoaded', async ()=>{
+    const rep = await detectRep();
+    const anchors = Array.from(document.querySelectorAll('a.cta-wa, a[href*="wa.me/"]'));
+    anchors.forEach(a=>{
+      if (/chat\.whatsapp\.com/i.test(a.href)) return; // no tocar enlaces de grupo
+      const raw = a.dataset.msg || "Hola {{NOMBRE}}, quiero información.";
+      const msg = raw.replace(/\{\{NOMBRE\}\}/g, rep.name);
+      a.href    = `https://wa.me/${rep.wa}?text=${encodeURIComponent(msg)}`;
+      a.target  = "_blank";
+      a.rel     = "noopener";
+    });
+    window.dataLayer = window.dataLayer || [];
+    anchors.forEach(a=>a.addEventListener('click', () =>
+      window.dataLayer.push({ event:'cta_click', type: a.classList.contains('cta-wa')?'wa_dm':'wa_link', rep: rep.key })
+    ));
+  });
+})();
+</script>
+
+<!-- Video play/pause por viewport -->
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const vid = document.getElementById('ritualVideo');
   if (!vid) return;
-
-  const io = new IntersectionObserver(
-    entries => entries.forEach(e => {
-      if (e.isIntersecting) {               // 50 % visible
-        vid.play().catch(()=>{});
-      } else {
-        vid.pause();
-      }
-    }),
-    { threshold: 0.5 }                      // mitad del área
-  );
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { vid.play().catch(()=>{}); } else { vid.pause(); }
+  }), { threshold: 0.5 });
   io.observe(vid);
 });
-
 </script>
 
- <!-- ==========================================================
-<!-- ================ POP-UP 1 · exit-intent ================= -->
-<div id="exitModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6">
-    <h3 class="text-2xl font-serif font-bold text-primary">
-      ¡Un momento! 🚀
-    </h3>
-    <p class="text-lg leading-relaxed">
-      Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong>
-      compartiendo RIMAN.
-    </p>
-
-    <a id="ctaToForm"
-       href="#registro"
-       class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition block">
-       ¡Quiero cuidar mi piel y ganar!
-    </a>
-
-    <button id="exitClose"
-            class="text-sm mt-2 text-gray-500 underline decoration-dotted hover:text-gray-700">
-      Sí, me la pierdo 😔
-    </button>
-  </div>
-</div>
-
-<!-- ================ POP-UP 2 · recordatorio ================= -->
-<div id="formReminderModal"
-     class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
-  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6 relative">
-    <button id="reminderClose"
-            class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
-
-    <h3 class="text-2xl font-serif font-bold text-primary">🚀 ¡Estás a un paso!</h3>
-
-    <p class="text-gray-700">
-      Completa este breve formulario y nuestro equipo te guiará para
-      <strong>cuidar tu piel</strong> y <strong>empezar a ganar ingresos</strong>.
-    </p>
-
-    <button id="reminderCloseBtn"
-            class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
-      Entendido, voy al formulario
-    </button>
-  </div>
-</div>
-
-<!-- ================  SCRIPTS  ======================================== -->
+<!-- POP-UPS -->
 <script>
-/* -------- Helper -------- */
 const $ = sel => document.querySelector(sel);
-
-/* -------- POP-UP 1  (exit-intent) -------- */
 (() => {
-  if (!$('#exitModal')) { console.warn('❗ Falta #exitModal en el HTML'); return; }
-
+  if (!$('#exitModal')) { return; }
   const KEY = 'riman-exit-shown';
-
   const showExit = () => {
-    if (sessionStorage.getItem(KEY)) return;        // 1 vez por sesión
+    if (sessionStorage.getItem(KEY)) return;
     sessionStorage.setItem(KEY, '1');
     $('#exitModal').classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
   };
-
-  /* Cursor sale por arriba (desktop) */
   document.addEventListener('mouseleave', e => { if (e.clientY <= 0) showExit(); });
-
-  /* Scroll > 60 % (mobile) */
   let fired = false;
   addEventListener('scroll', () => {
     if (fired) return;
     const ratio = scrollY / (document.body.scrollHeight - innerHeight);
     if (ratio > 0.6) { fired = true; showExit(); }
   });
-
-  /* Back button */
   if (history.pushState) {
     history.pushState({ exit:false }, '');
     addEventListener('popstate', e => { if (!e.state || !e.state.exit) showExit(); });
   }
-
-  /* Cerrar pop-up 1 */
-  $('#exitClose').onclick = () => { $('#exitModal').classList.add('hidden');
-                                    document.body.classList.remove('overflow-hidden'); };
-  $('#exitModal').onclick = e => { if (e.target.id === 'exitModal')
-                                     $('#exitClose').click(); };
+  $('#exitClose')?.addEventListener('click', () => { $('#exitModal').classList.add('hidden'); document.body.classList.remove('overflow-hidden'); });
+  $('#exitModal')?.addEventListener('click', e => { if (e.target.id === 'exitModal') $('#exitClose').click(); });
 })();
-
-/* -------- Conexión CTA → POP-UP 2 → Form -------- */
 document.addEventListener('DOMContentLoaded', () => {
-  if (!$('#ctaToForm') || !$('#formReminderModal')) {
-    console.warn('❗ Faltan #ctaToForm o #formReminderModal'); return;
-  }
-
-  /* Abrir recordatorio */
+  if (!$('#ctaToForm') || !$('#formReminderModal')) return;
   $('#ctaToForm').onclick = e => {
     e.preventDefault();
     $('#exitModal').classList.add('hidden');
     document.body.classList.remove('overflow-hidden');
     $('#formReminderModal').classList.remove('hidden');
   };
-
-  /* Función que cierra pop-up 2 y hace scroll al form */
   const goForm = () => {
     $('#formReminderModal').classList.add('hidden');
     $('#registro')?.scrollIntoView({ behavior:'smooth', block:'center' });
   };
-
   $('#reminderClose')   ?.addEventListener('click', goForm);
   $('#reminderCloseBtn')?.addEventListener('click', goForm);
-  $('#formReminderModal').onclick = e => { if (e.target.id === 'formReminderModal') goForm(); };
+  $('#formReminderModal')?.addEventListener('click', e => { if (e.target.id === 'formReminderModal') goForm(); });
 });
 </script>
-<!-- ================================================================ -->
 
+<!-- POP-UP 1 -->
+<div id="exitModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6">
+    <h3 class="text-2xl font-serif font-bold text-primary">¡Un momento! 🚀</h3>
+    <p class="text-lg leading-relaxed">
+      Estás a punto de perder la oportunidad de <strong>cuidar tu piel y ganar dinero</strong> compartiendo RIMAN.
+    </p>
+    <a id="ctaToForm" href="#registro" class="bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition block">
+      ¡Quiero cuidar mi piel y ganar!
+    </a>
+    <button id="exitClose" class="text-sm mt-2 text-gray-500 underline decoration-dotted hover:text-gray-700">Sí, me la pierdo 😔</button>
+  </div>
+</div>
+
+<!-- POP-UP 2 (copy actualizado a “elige una opción”) -->
+<div id="formReminderModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+  <div class="bg-white w-[92%] max-w-md p-8 rounded-2xl text-center space-y-6 relative">
+    <button id="reminderClose" class="absolute top-3 right-4 text-2xl leading-none">&times;</button>
+    <h3 class="text-2xl font-serif font-bold text-primary">🚀 ¡Estás a un paso!</h3>
+    <p class="text-gray-700">
+      Elige una opción para continuar (<strong>Grupo VIP</strong> o <strong>chat 1 a 1</strong>) y nuestro equipo te guiará para
+      <strong>cuidar tu piel</strong> y <strong>empezar a ganar ingresos</strong>.
+    </p>
+    <button id="reminderCloseBtn" class="w-full bg-primary text-white font-semibold py-3 rounded-xl hover:bg-primary/90 transition">
+      Entendido, voy a las opciones
+    </button>
+  </div>
+</div>
+
+</body>
+</html>
+
+<!-- Tailwind @keyframes personalizadas -->
+<style>
+@layer utilities{
+  @keyframes ping-slow{
+    0%{transform:scale(1);opacity:.6}
+    60%{transform:scale(1.3);opacity:0}
+    100%{transform:scale(1.3);opacity:0}
+  }
+  .animate-ping-slow{animation:ping-slow 2.5s cubic-bezier(0,0,.2,1) infinite}
+}
+</style>
